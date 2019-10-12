@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>f72582bc-ac15-4459-9e76-104bd80b269f</ProjectGuid>
+    <ProjectGuid>19894310-ba1a-4f86-b492-78be80458f34</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>FilterTool.py</StartupFile>
     <SearchPath>
