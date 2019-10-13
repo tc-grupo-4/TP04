@@ -13,16 +13,20 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
+        MainWindow.setWindowModality(QtCore.Qt.ApplicationModal)
         MainWindow.resize(868, 611)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_12 = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout_12.setObjectName("gridLayout_12")
         self.plotsLayout = QtWidgets.QVBoxLayout()
+        self.plotsLayout.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
         self.plotsLayout.setObjectName("plotsLayout")
-        self.figureLayout = QtWidgets.QFormLayout()
-        self.figureLayout.setObjectName("figureLayout")
-        self.plotsLayout.addLayout(self.figureLayout)
         self.gridLayout_12.addLayout(self.plotsLayout, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -252,7 +256,9 @@ class Ui_MainWindow(object):
         self.sPlaneCheckBox.setText(_translate("MainWindow", "S Plane Diagram"))
         self.groupDelayCheckBox.setText(_translate("MainWindow", "Group Delay"))
         self.freqResponseCheckBox.setText(_translate("MainWindow", "Frequency Response"))
+        self.computePushButton.setToolTip(_translate("MainWindow", "Compute approximation"))
         self.computePushButton.setText(_translate("MainWindow", "Compute"))
+        self.saveResultsPushButton.setToolTip(_translate("MainWindow", "Save results to .PDF report"))
         self.saveResultsPushButton.setText(_translate("MainWindow", "Save Results"))
 
 

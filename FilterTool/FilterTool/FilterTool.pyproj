@@ -21,6 +21,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="PlotHelper.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="FilterTool.py" />
     <Compile Include="FilterToolDesign.py" />
   </ItemGroup>
