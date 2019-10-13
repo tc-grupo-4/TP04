@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'FilterTool.ui'
+# Form implementation generated from reading ui file 'resources/FilterToolDesign.ui'
 #
 # Created by: PyQt5 UI code generator 5.13.1
 #
@@ -20,20 +20,13 @@ class Ui_MainWindow(object):
         self.gridLayout_12.setObjectName("gridLayout_12")
         self.plotsLayout = QtWidgets.QVBoxLayout()
         self.plotsLayout.setObjectName("plotsLayout")
-        self.MplWidget = MplWidget(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.MplWidget.sizePolicy().hasHeightForWidth())
-        self.MplWidget.setSizePolicy(sizePolicy)
-        self.MplWidget.setMinimumSize(QtCore.QSize(0, 0))
-        self.MplWidget.setBaseSize(QtCore.QSize(100, 140))
-        self.MplWidget.setObjectName("MplWidget")
-        self.plotsLayout.addWidget(self.MplWidget)
+        self.figureLayout = QtWidgets.QFormLayout()
+        self.figureLayout.setObjectName("figureLayout")
+        self.plotsLayout.addLayout(self.figureLayout)
         self.gridLayout_12.addLayout(self.plotsLayout, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 868, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 868, 20))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -261,4 +254,13 @@ class Ui_MainWindow(object):
         self.freqResponseCheckBox.setText(_translate("MainWindow", "Frequency Response"))
         self.computePushButton.setText(_translate("MainWindow", "Compute"))
         self.saveResultsPushButton.setText(_translate("MainWindow", "Save Results"))
-from mplwidget import MplWidget
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())

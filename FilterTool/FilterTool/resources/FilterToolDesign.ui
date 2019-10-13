@@ -18,26 +18,7 @@
     <item row="0" column="0">
      <layout class="QVBoxLayout" name="plotsLayout">
       <item>
-       <widget class="MplWidget" name="MplWidget" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="baseSize">
-         <size>
-          <width>100</width>
-          <height>140</height>
-         </size>
-        </property>
-       </widget>
+       <layout class="QFormLayout" name="figureLayout"/>
       </item>
      </layout>
     </item>
@@ -49,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>868</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
@@ -397,14 +378,6 @@
    </widget>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>MplWidget</class>
-   <extends>QWidget</extends>
-   <header>mplwidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
