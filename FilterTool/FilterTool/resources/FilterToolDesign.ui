@@ -3,14 +3,14 @@
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
   <property name="windowModality">
-   <enum>Qt::ApplicationModal</enum>
+   <enum>Qt::NonModal</enum>
   </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>868</width>
-    <height>611</height>
+    <height>688</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,16 +20,12 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Filter Tool</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_12">
     <item row="0" column="0">
-     <layout class="QVBoxLayout" name="plotsLayout">
-      <property name="sizeConstraint">
-       <enum>QLayout::SetNoConstraint</enum>
-      </property>
-     </layout>
+     <layout class="QVBoxLayout" name="plotsLayout"/>
     </item>
    </layout>
   </widget>
@@ -39,12 +35,15 @@
      <x>0</x>
      <y>0</y>
      <width>868</width>
-     <height>20</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QDockWidget" name="dockWidget">
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
    <property name="windowTitle">
     <string>Filter Parameters</string>
    </property>
@@ -55,6 +54,178 @@
     <layout class="QGridLayout" name="gridLayout_5">
      <item row="0" column="0">
       <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Template</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="1" column="1">
+           <layout class="QGridLayout" name="gridLayout_11">
+            <item row="0" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <item>
+               <widget class="QLabel" name="label_5">
+                <property name="text">
+                 <string>Stop Band 1</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDoubleSpinBox" name="stopBand1DoubleSpinBox">
+                <property name="maximum">
+                 <double>99999999999.000000000000000</double>
+                </property>
+                <property name="singleStep">
+                 <double>0.010000000000000</double>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="0" column="1">
+             <layout class="QHBoxLayout" name="stopBand2_horizontalLayout">
+              <item>
+               <widget class="QLabel" name="stopBand2_label">
+                <property name="text">
+                 <string>Stop Band 2</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDoubleSpinBox" name="stopBand2DoubleSpinBox">
+                <property name="maximum">
+                 <double>99999999999.000000000000000</double>
+                </property>
+                <property name="singleStep">
+                 <double>0.010000000000000</double>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="1" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="QLabel" name="label_2">
+                <property name="text">
+                 <string>Pass Band 1</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDoubleSpinBox" name="passBand1DoubleSpinBox">
+                <property name="maximum">
+                 <double>99999999999.000000000000000</double>
+                </property>
+                <property name="singleStep">
+                 <double>0.010000000000000</double>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="1" column="1">
+             <layout class="QHBoxLayout" name="passBand2_horizontalLayout">
+              <item>
+               <widget class="QLabel" name="passBand2_label">
+                <property name="text">
+                 <string>Pass Band 2</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDoubleSpinBox" name="passBand2DoubleSpinBox">
+                <property name="maximum">
+                 <double>99999999999.000000000000000</double>
+                </property>
+                <property name="singleStep">
+                 <double>0.010000000000000</double>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="2" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <widget class="QLabel" name="label">
+                <property name="text">
+                 <string>Min Attenuated</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDoubleSpinBox" name="minAttnDoubleSpinBox"/>
+              </item>
+             </layout>
+            </item>
+            <item row="2" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Max Attenuated</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDoubleSpinBox" name="maxAttnDoubleSpinBox"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="1">
+           <widget class="QPushButton" name="setTemplateButton">
+            <property name="text">
+             <string>Set Template</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_14">
+            <item>
+             <widget class="QLabel" name="label_13">
+              <property name="text">
+               <string>Type</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="filterTypeComboBox">
+              <item>
+               <property name="text">
+                <string>Low-pass</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>High-pass</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Band-pass</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Band-reject</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>All-pass</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item>
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
@@ -119,48 +290,15 @@
                </item>
               </layout>
              </item>
+             <item row="3" column="0">
+              <widget class="QPushButton" name="previewApproxButton">
+               <property name="text">
+                <string>Preview Aproximation</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
-          </item>
-          <item row="0" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_14">
-            <item>
-             <widget class="QLabel" name="label_13">
-              <property name="text">
-               <string>Type</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="filterTypeComboBox">
-              <item>
-               <property name="text">
-                <string>Low-pass</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>High-pass</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Band-pass</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Band-reject</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>All-pass</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-           </layout>
           </item>
           <item row="1" column="0">
            <layout class="QHBoxLayout" name="horizontalLayout_16">
@@ -216,108 +354,21 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox">
-         <property name="title">
-          <string>Footprint</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_7">
-          <item row="1" column="1">
-           <layout class="QGridLayout" name="gridLayout_11">
-            <item row="0" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_6">
-              <item>
-               <widget class="QLabel" name="label_5">
-                <property name="text">
-                 <string>Stop Band 1</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="stopBand1DoubleSpinBox"/>
-              </item>
-             </layout>
-            </item>
-            <item row="0" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_5">
-              <item>
-               <widget class="QLabel" name="label_4">
-                <property name="text">
-                 <string>Stop Band 2</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="stopBand2DoubleSpinBox"/>
-              </item>
-             </layout>
-            </item>
-            <item row="1" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
-              <item>
-               <widget class="QLabel" name="label_2">
-                <property name="text">
-                 <string>Pass Band 1</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="passBand1DoubleSpinBox"/>
-              </item>
-             </layout>
-            </item>
-            <item row="1" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_7">
-              <item>
-               <widget class="QLabel" name="label_6">
-                <property name="text">
-                 <string>Pass Band 2</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="passBand2DoubleSpinBox"/>
-              </item>
-             </layout>
-            </item>
-            <item row="2" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_2">
-              <item>
-               <widget class="QLabel" name="label">
-                <property name="text">
-                 <string>Min Attenuated</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="minAttnDoubleSpinBox"/>
-              </item>
-             </layout>
-            </item>
-            <item row="2" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
-              <item>
-               <widget class="QLabel" name="label_3">
-                <property name="text">
-                 <string>Max Attenuated</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="maxAttnDoubleSpinBox"/>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
         <widget class="QGroupBox" name="groupBox_4">
          <property name="title">
           <string>Plots</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_10">
+          <item row="2" column="0">
+           <widget class="QPushButton" name="saveResultsPushButton">
+            <property name="toolTip">
+             <string>Save results to .PDF report</string>
+            </property>
+            <property name="text">
+             <string>Save Results</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
            <layout class="QGridLayout" name="gridLayout_9">
             <item row="0" column="0">
@@ -374,16 +425,6 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QPushButton" name="saveResultsPushButton">
-            <property name="toolTip">
-             <string>Save results to .PDF report</string>
-            </property>
-            <property name="text">
-             <string>Save Results</string>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
        </item>
@@ -392,6 +433,11 @@
     </layout>
    </widget>
   </widget>
+  <action name="actionParameters">
+   <property name="text">
+    <string>Parameters</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

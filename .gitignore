@@ -102,3 +102,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Custom(Doxygen)
+/Doxygen/*
+!/Doxygen/Doxyfile.ini
