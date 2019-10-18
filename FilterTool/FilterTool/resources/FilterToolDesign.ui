@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>868</width>
-    <height>688</height>
+    <height>723</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -238,6 +238,20 @@
              <string>Parameters</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_8">
+             <item row="1" column="0">
+              <layout class="QHBoxLayout" name="horizontalLayout_15">
+               <item>
+                <widget class="QRadioButton" name="maxQRadioButton">
+                 <property name="text">
+                  <string>Max Q Allowed</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QDoubleSpinBox" name="maxQdoubleSpinBox"/>
+               </item>
+              </layout>
+             </item>
              <item row="0" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_17">
                <item>
@@ -262,20 +276,6 @@
                </item>
               </layout>
              </item>
-             <item row="1" column="0">
-              <layout class="QHBoxLayout" name="horizontalLayout_15">
-               <item>
-                <widget class="QRadioButton" name="maxQRadioButton">
-                 <property name="text">
-                  <string>Max Q Allowed</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QDoubleSpinBox" name="maxQdoubleSpinBox"/>
-               </item>
-              </layout>
-             </item>
              <item row="2" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_18">
                <item>
@@ -294,6 +294,13 @@
               <widget class="QPushButton" name="previewApproxButton">
                <property name="text">
                 <string>Preview Aproximation</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QPushButton" name="clearApproxButton">
+               <property name="text">
+                <string>Clear Approximations</string>
                </property>
               </widget>
              </item>

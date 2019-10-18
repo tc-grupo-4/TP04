@@ -164,7 +164,7 @@ class Template(object):
         x_left = int_p - 1
         x_right = int_s + 2
 
-        rect1 = Rectangle((0, self.att_p), self.omega_p1, 2*self.att_s)
+        rect1 = Rectangle((0, self.att_p), self.omega_p1, 1e3*self.att_s)
         rect2 = Rectangle((self.omega_s1, 0), 1e3*self.omega_s1, self.att_s)
         rectangles = []
         rectangles.append(rect1)
@@ -172,7 +172,7 @@ class Template(object):
         patch_collection = PatchCollection(rectangles, facecolor='tab:gray', alpha=0.5, edgecolor='k', hatch='/')
         axes.add_collection(patch_collection)
         axes.set_xscale('log')
-        axes.set_ylim([0, self.att_s*(1 + 0.5)])
+        axes.set_ylim([0, 2*self.att_s])
         axes.set_xlim([math.pow(10,x_left), math.pow(10,x_right)])
        
 
@@ -193,7 +193,7 @@ class Template(object):
         patch_collection = PatchCollection(rectangles, facecolor='tab:gray', alpha=0.5, edgecolor='k', hatch='/')
         axes.add_collection(patch_collection)
         axes.set_xscale('log')
-        axes.set_ylim([0, self.att_s*(1 + 0.5)])
+        axes.set_ylim([0, 2*self.att_s])
         axes.set_xlim([math.pow(10,x_left), math.pow(10,x_right)])
 
 
@@ -216,7 +216,7 @@ class Template(object):
         patch_collection = PatchCollection(rectangles, facecolor='tab:gray', alpha=0.5, edgecolor='k', hatch='/')
         axes.add_collection(patch_collection)
         axes.set_xscale('log')
-        axes.set_ylim([0, self.att_s*(1 + 0.5)])
+        axes.set_ylim([0, 2*self.att_s])
         axes.set_xlim([math.pow(10,x_left), math.pow(10,x_right)])
 
         
@@ -239,7 +239,7 @@ class Template(object):
         patch_collection = PatchCollection(rectangles, facecolor='tab:gray', alpha=0.5, edgecolor='k', hatch='/')
         axes.add_collection(patch_collection)
         axes.set_xscale('log')
-        axes.set_ylim([0, self.att_s*(1 + 0.5)])
+        axes.set_ylim([0, 2*self.att_s])
         axes.set_xlim([math.pow(10,x_left), math.pow(10,x_right)])
 
 
@@ -260,5 +260,5 @@ class Template(object):
         patch_collection = PatchCollection(rectangles, facecolor='tab:gray', alpha=0.5, edgecolor='k', hatch='/')
         axes.add_collection(patch_collection)
         axes.set_xscale('log')
-        axes.set_ylim([0, self.att_s*(1 + 0.5)])
+        axes.set_ylim([0, 2*self.att_s])
         axes.set_xlim([math.pow(10,x_left), math.pow(10,x_right)])

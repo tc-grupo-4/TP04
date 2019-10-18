@@ -7,7 +7,7 @@ import FilterToolDesign
 import sys
 import numpy as np
 from Template import Template
-import Approximation
+from Approximation import Approximation
 import matplotlib.pyplot as mpl
 
 ## Class inherited from Ui_MainWindow to customize GUI design and behaviour
@@ -21,10 +21,14 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         mpl.rc('text', usetex=True)
 
         # array containing approximation types
-        self.approx_types = ['butterworth', 'bessel', 'chevy_1', 'chevy_2', 'legendre', 'gauss', 'cauer']
+        self.approx_types = ['butterworth', 'bessel', 'cheby_1', 'cheby_2', 'legendre', 'gauss', 'cauer']
 
         # connect 'preview aproximation' button to handler
         self.previewApproxButton.clicked.connect(self.on_preview_clicked)
+        # connect clear approximation button to handler
+        self.clearApproxButton.clicked.connect(self.on_clear_previews_clicked)
+        # connect approximation type combo box to handler
+        self.approximationComboBox.currentIndexChanged.connect(self.validate_approximation)
         # connect 'Compute' button to handler.
         self.computePushButton.clicked.connect(self.on_compute_clicked)
         # connect 'Set Template' button to handler
@@ -71,6 +75,21 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         self.saveResultsPushButton.setEnabled(False)
         # setup figures and canvases
         self.set_mpl()
+        # array containing every preview ploted
+        self.plotted_previews = []
+        # initialize plot options
+        self.any_plots_checked()
+        
+        # indica si alguna vez se ploteo esto
+        self.att_plotted = False
+        self.phase_plotted = False
+        self.step_plotted = False
+        self.s_plane_plotted = False
+        self.freq_response_plotted = False
+        self.group_delay_plotted = False
+
+        self.preview_already_plotted = False
+
 
 
         
@@ -99,22 +118,20 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
     #  @details Instantiates every figure and canvas to be used by de program
     #  @param self The object pointer
     def set_mpl(self):
-        self.fig0 = Figure()
-        self.canvas0 = FigureCanvas(self.fig0)
-        self.fig1 = Figure()
-        self.canvas1 = FigureCanvas(self.fig1)
-        self.fig2 = Figure()
-        self.canvas2 = FigureCanvas(self.fig2)
-        self.fig3 = Figure()
-        self.canvas3 = FigureCanvas(self.fig3)
-        self.fig4 = Figure()
-        self.canvas4 = FigureCanvas(self.fig4)
-        self.fig5 = Figure()
-        self.canvas5 = FigureCanvas(self.fig5)
-        self.fig6 = Figure()
-        self.canvas6 = FigureCanvas(self.fig6)
-
-        self.figure_list = [self.fig0, self.fig1, self.fig2, self.fig3, self.fig4, self.fig5, self.fig6]
+        self.template_fig = Figure()
+        self.template_canvas = FigureCanvas(self.template_fig)
+        self.att_fig = Figure()
+        self.att_canvas = FigureCanvas(self.att_fig)
+        self.phase_fig = Figure()
+        self.phase_canvas = FigureCanvas(self.phase_fig)
+        self.group_fig = Figure()
+        self.group_canvas = FigureCanvas(self.group_fig)
+        self.step_fig = Figure()
+        self.step_canvas = FigureCanvas(self.step_fig)
+        self.s_plane_fig = Figure()
+        self.s_plane_canvas = FigureCanvas(self.s_plane_fig)
+        self.freq_fig = Figure()
+        self.freq_canvas = FigureCanvas(self.freq_fig)
 
 
     ## Handles a filter type combo box index change.
@@ -182,15 +199,15 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         # remove all plots widgets. in plotLayout
         self.clear_plot_layout()
         # plot template in specified axes
-        self.ax1f0 = self.fig0.add_subplot(211)
-        self.ax2f0 = self.fig0.add_subplot(212)
-        self.template.plot_template_in_axes(self.ax1f0, self.ax2f0)
+        self.template_axes = self.template_fig.add_subplot(211)
+        self.template_axes_norm = self.template_fig.add_subplot(212)
+        self.template.plot_template_in_axes(self.template_axes, self.template_axes_norm)
         # add canvas0 to plotLayout
-        self.plotsLayout.addWidget(self.canvas0)
+        self.plotsLayout.addWidget(self.template_canvas)
         # show canvas0
-        self.canvas0.show()
+        self.template_canvas.show()
         # redraw canvas0
-        self.canvas0.draw()
+        self.template_canvas.draw()
         # set template submited to True
         self.template_submited = True
         self.validate_approximation()
@@ -203,6 +220,17 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
     #  @return A boolean value. True if approximation is ready to compute. False otherwise
     def validate_approximation(self):
         valid = False
+
+        approx_index = self.approximationComboBox.currentIndex()
+        self.approx_type = self.approx_types[approx_index]
+
+        if approx_index == 1: #Bessel
+            self.minMaxRadioButton.setEnabled(False)
+            self.maxQRadioButton.setEnabled(False)
+        else:
+            self.minMaxRadioButton.setEnabled(True)
+            self.maxQRadioButton.setEnabled(True)
+
         if self.customOrderRadioButton.isChecked():
             self.restriction = 'custom_order'
             valid = self.customOrderSpinBox.value() > 0
@@ -251,23 +279,182 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
 
     def on_preview_clicked(self):
         index = self.approximationComboBox.currentIndex()
-        self.approximation = Approximation.Butterworth(self.template,
+        self.approximation = Approximation(self.template,
                                          restriction = self.restriction,
                                          min_order = self.minOrderSpinBox.value(),
                                          max_order = self.maxOrderSpinBox.value(),
                                          max_q = self.maxQdoubleSpinBox.value(),
-                                         custom_order = self.customOrderSpinBox.value())
+                                         custom_order = self.customOrderSpinBox.value(),
+                                         approx_type=self.approx_type)
         self.approximation.compute_approximation()
-        self.approximation.plot_preview_to_axes(self.ax1f0, self.ax2f0)
+        left, right = self.template_axes.get_xlim()
+        left_N, right_N = self.template_axes_norm.get_xlim()
+        limits = {'left':left, 'right':right, 'left_N':left_N, 'right_N':right_N}
+        preview_lines = self.approximation.plot_preview_to_axes(self.template_axes, self.template_axes_norm, limits)
+        for line in preview_lines:
+            self.plotted_previews.append(line)
         # show canvas0
-        self.canvas0.show()
+        self.template_canvas.show()
         # redraw canvas0
-        self.canvas0.draw()
+        self.template_canvas.draw()
+        self.preview_already_plotted = True
 
+
+    def on_clear_previews_clicked(self):
+        if self.preview_already_plotted:
+            for line in self.plotted_previews:
+                line.pop(0).remove()
+            self.template_canvas.draw()
+            self.plotted_previews = []
+            self.template_axes.get_legend().remove()
+            self.template_axes_norm.get_legend().remove()
+            self.template_canvas.draw()
+            self.preview_already_plotted = False
+        # redraw template to sclae properly
+        # remove all plots widgets. in plotLayout
+        self.clear_plot_layout()
+        # plot template in specified axes
+        self.template_axes = self.template_fig.add_subplot(211)
+        self.template_axes_norm = self.template_fig.add_subplot(212)
+        self.template.plot_template_in_axes(self.template_axes, self.template_axes_norm)
+        # add canvas0 to plotLayout
+        self.plotsLayout.addWidget(self.template_canvas)
+        # show canvas0
+        self.template_canvas.show()
+        # redraw canvas0
+        self.template_canvas.draw()
+        # set template submited to True
+        self.template_submited = True
+        self.validate_approximation()
+        
 
     def on_compute_clicked(self):
-        pass
-        
+        # eliminar los plots de plotsLayout
+        compute_options = [self.plot_attenuation, self.plot_phase, self.plot_group_delay, self.plot_step_response, self.plot_s_plane, self.plot_freq_resp]
+        count = 0
+        for opt in compute_options:
+            if opt:
+                count = count + 1
+        self.plots_axes = []
+        if self.plot_attenuation:
+            # if previously plotted, clear
+            if self.att_plotted:
+                self.att_axes.clear()
+            # create axes in figure
+            self.att_axes = self.att_fig.add_subplot(111)
+            left, right = self.approximation.plot_attenuation_to_axes(self.att_axes)
+
+            t_left, t_right = self.template_axes.get_xlim()
+            if t_left > left:
+                left = t_left
+
+            if t_right < right:
+                right = t_right
+
+            self.att_axes.set_xlim(left, right)
+            self.att_axes.set_ylim(auto=True)
+            self.att_axes.grid(True, which='minor',axis='both')
+            self.att_axes.yaxis.grid()
+            self.att_plotted = True
+            self.att_canvas.draw()
+            self.att_canvas.show()
+        if self.plot_phase:
+            # if previously plotted, clear
+            if self.phase_plotted:
+                self.phase_axes.clear()
+            # create axes in figure
+            self.phase_axes = self.phase_fig.add_subplot(111)
+            left, right = self.template_axes.get_xlim()
+            limits = {'left':left, 'right':right}
+            p_left, p_right = self.approximation.plot_phase_to_axes(self.phase_axes, limits)
+
+            if p_left > left:
+                left = p_left
+
+            if p_right < right:
+                right = p_right
+            self.phase_axes.set_xlim(left, right)
+            self.phase_axes.set_ylim(auto=True)
+            self.phase_axes.legend()
+            self.phase_axes.grid(True, which='minor',axis='both')
+            self.phase_axes.yaxis.grid()
+            self.phase_plotted = True
+            self.phase_canvas.draw()
+            self.phase_canvas.show()
+        if self.plot_group_delay:
+            # if previously plotted, clear
+            if self.group_delay_plotted:
+                self.group_axes.clear()
+            # create axes in figure
+            self.group_axes = self.group_fig.add_subplot(111)
+            left, right = self.template_axes.get_xlim()
+            limits = {'left':left, 'right':right}
+            p_left, p_right = self.approximation.plot_group_delay_to_axes(self.group_axes, limits)
+
+            self.group_axes.set_ylim(auto=True)
+            self.group_axes.legend()
+            self.group_axes.grid(True, which='minor',axis='both')
+            self.group_axes.xaxis.grid()
+            self.group_axes.yaxis.grid()
+            self.group_delay_plotted = True
+            self.group_canvas.draw()
+            self.group_canvas.show()
+        if self.plot_step_response:
+            # if previously plotted, clear
+            if self.step_plotted:
+                self.step_axes.clear()
+            # create axes in figure
+            self.step_axes = self.step_fig.add_subplot(111)
+            left, right = self.template_axes.get_xlim()
+            limits = {'left':left, 'right':right}
+            self.approximation.plot_step_response_to_axes(self.step_axes)
+
+            self.step_axes.set_ylim(auto=True)
+            self.step_axes.legend()
+            self.step_axes.grid(True, which='minor',axis='both')
+            self.step_axes.xaxis.grid()
+            self.step_axes.yaxis.grid()
+            self.step_plotted = True
+            self.step_canvas.draw()
+            self.step_canvas.show()
+        if self.plot_s_plane:
+            # if previously plotted, clear
+            if self.s_plane_plotted:
+                self.s_plane_axes.clear()
+            # create axes in figure
+            self.s_plane_axes = self.s_plane_fig.add_subplot(111, projection='polar')
+            left, right = self.template_axes.get_xlim()
+            limits = {'left':left, 'right':right}
+            self.approximation.plot_s_plane_to_axes(self.s_plane_axes)
+
+            self.s_plane_axes.set_ylim(auto=True)
+            self.s_plane_axes.legend()
+            self.s_plane_plotted = True
+            self.s_plane_canvas.draw()
+            self.s_plane_canvas.show()
+        if self.plot_freq_resp:
+            # if previously plotted, clear
+            if self.freq_response_plotted:
+                self.freq_axes.clear()
+            # create axes in figure
+            self.freq_axes = self.freq_fig.add_subplot(111)
+            left, right = self.template_axes.get_xlim()
+            limits = {'left':left, 'right':right}
+            p_left, p_right = self.approximation.plot_freq_response_to_axes(self.freq_axes, limits)
+
+            if p_left > left:
+                left = p_left
+
+            if p_right < right:
+                right = p_right
+            self.freq_axes.set_xlim(left, right)
+            self.freq_axes.set_ylim(auto=True)
+            self.freq_axes.legend()
+            self.freq_axes.grid(True, which='minor',axis='both')
+            self.freq_axes.yaxis.grid()
+            self.freq_response_plotted = True
+            self.freq_canvas.draw()
+            self.freq_canvas.show()
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
