@@ -24,6 +24,9 @@
     <Compile Include="Approximation.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Celda.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PlotHelper.py">
       <SubType>Code</SubType>
     </Compile>
