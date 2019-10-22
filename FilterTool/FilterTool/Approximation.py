@@ -59,10 +59,23 @@ class Approximation(object):
 
 
     def __parameters_max_q(self):
-        aux = (2/math.pi)*math.acos(1/(2*self.max_q))
-        n_max = 1/(1-aux)
-        i, d = divmod(n_max,1)
-        self.order_max_q = i
+        if self.approx_type == 'butterworth':
+            aux = (2/math.pi)*math.acos(1/(2*self.max_q))
+            n_max = 1/(1-aux)
+            i, d = divmod(n_max,1)
+            self.order_max_q = i
+        elif self.approx_type == 'bessel':
+            pass
+        elif self.approx_type == 'cheby_1':
+            pass
+        elif self.approx_type == 'cheby_2':
+            pass
+        elif self.approx_type == 'lgendre':
+            pass
+        elif self.approx_type == 'gauss':
+            pass
+        elif self.approx_type == 'cauer':
+            pass
 
 
     def __compute_epsilon(self):
@@ -219,9 +232,9 @@ class Approximation(object):
 
         self.__compute_epsilon()
 
-        self.num, self.den = signal.cheby1(self.N, self.epsilon, wn, self.filter_t, analog=True, output='ba')
-        self.zeros, self.poles, self.gain = signal.cheby1(self.N, self.epsilon, wn, self.filter_t, analog=True, output='zpk')
-        self.sos = signal.cheby1(self.N, self.epsilon, wn, self.filter_t, analog=True, output='sos')
+        self.num, self.den = signal.cheby1(self.N, self.template.att_p, wn, self.filter_t, analog=True, output='ba')
+        self.zeros, self.poles, self.gain = signal.cheby1(self.N, self.template.att_p, wn, self.filter_t, analog=True, output='zpk')
+        self.sos = signal.cheby1(self.N, self.template.att_p, wn, self.filter_t, analog=True, output='sos')
 
 
     def __compute_approximation_norm_cheby_1(self):
@@ -238,18 +251,16 @@ class Approximation(object):
         elif self.restriction == 'min_max_order':
             if N < self.min_order:
                 self.N = self.min_order
-                self.epsilon = self.epsilon_n_min
             elif N > self.max_order:
                 self.N = self.max_order
-                self.epsilon = self.epsilon_n_max
             else:
                 self.N = N
         
         self.__compute_epsilon()
 
-        self.num_norm, self.den_norm = signal.cheby1(self.N, self.epsilon, wn, 'lowpass', analog=True, output='ba')
-        self.zeros_norm, self.poles_norm, self.gain_norm = signal.cheby1(self.N, self.epsilon, wn, 'lowpass', analog=True, output='zpk')
-        self.sos_norm = signal.cheby1(self.N, self.epsilon, wn, 'lowpass', analog=True, output='sos')
+        self.num_norm, self.den_norm = signal.cheby1(self.N, self.template.att_p, wn, 'lowpass', analog=True, output='ba')
+        self.zeros_norm, self.poles_norm, self.gain_norm = signal.cheby1(self.N, self.template.att_p, wn, 'lowpass', analog=True, output='zpk')
+        self.sos_norm = signal.cheby1(self.N, self.template.att_p, wn, 'lowpass', analog=True, output='sos')
 
 
     def __compute_approximation_denorm_cheby_2(self):
@@ -291,10 +302,8 @@ class Approximation(object):
         elif self.restriction == 'min_max_order':
             if N < self.min_order:
                 self.N = self.min_order
-                self.epsilon = self.epsilon_n_min
             elif N > self.max_order:
                 self.N = self.max_order
-                self.epsilon = self.epsilon_n_max
             else:
                 self.N = N
 

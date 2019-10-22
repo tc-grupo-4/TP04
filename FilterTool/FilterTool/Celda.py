@@ -219,6 +219,6 @@ class Celda:
 		if val >= num1 and val < num2:
 			if (val-num1) < (num2 -val):
 				return num1
-			else
+			else:
 				return num2
 		return 0
