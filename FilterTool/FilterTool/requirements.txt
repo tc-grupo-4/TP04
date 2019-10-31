@@ -1,0 +1,6 @@
+pip==19.0.3
+setuptools==40.8.0
+matplotlib
+numpy
+PyQt5
+scipy
