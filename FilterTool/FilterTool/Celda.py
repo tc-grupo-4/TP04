@@ -1,4 +1,4 @@
-
+from eseries import find_nearest, E12,E24,E48
 '''
 Implementa solo celdas de los tipos:
 	LP1 = Pasabajos de 1er Orden
@@ -74,15 +74,15 @@ class Celda:
 		elif self.filterType == 'SKL':
 			temp = self.calcLowSallenKey()
 		elif self.filterType == 'SKH':
-			temp = calcHighSallenKey()
+			temp = self.calcHighSallenKey()
 		elif self.filterType == 'HP1':
-			temp = calcFirstOrderHighPass()
+			temp = self.calcFirstOrderHighPass()
 		elif self.filterType == 'BPR':
-			temp = calcBandRauch()
+			temp = self.calcBandRauch()
 		elif self.filterType == 'NR':
-			temp = calcNotchRauch()
+			temp = self.calcNotchRauch()
 		elif self.filterType == 'DT':
-			temp = calcDoubleT()
+			temp = self.calcDoubleT()
 		return temp
 
 	def calcFirstOrderLowPass(self):
@@ -99,10 +99,10 @@ class Celda:
 		R = a * (1/C)
 		Ra = (k-1)*Rb
 		if self.roun == True:
-			R = roundValueE12(R)
-			Ra = roundValueE12(Ra)
-			Rb = roundValueE12(Rb)
-			C = roundValueE12(C)
+			R = find_nearest(E12,R)
+			Ra = find_nearest(E12,Ra)
+			Rb = find_nearest(E12,Rb)
+			C = find_nearest(E12,C)
 		temp = {'R': R, 'Ra': Ra, 'Rb': Rb, 'C': C}
 		return temp
 
@@ -126,11 +126,11 @@ class Celda:
 		Rb = 10 * 10**3
 		Ra = (k-1)*Rb
 		if self.roun == True:
-			R = roundValueE12(R)
-			C1 = roundValueE12(C1)
-			C2 = roundValueE12(C2)
-			Ra = roundValueE12(Ra)
-			Rb =roundValueE12(Rb)
+			R = find_nearest(E12,R)
+			C1 = find_nearest(E12,C1)
+			C2 = find_nearest(E12,C2)
+			Ra = find_nearest(E12,Ra)
+			Rb = find_nearest(E12,Rb)
 
 		temp = {'R1':R , 'R2':R , 'C1':C1, 'C2': C2, 'Ra':Ra, 'Rb': Rb }
 		return temp
@@ -151,10 +151,10 @@ class Celda:
 		C = 10 * 10**-9
 		R = 1/(Wo*C)
 		if self.roun == True:
-			R =roundValueE12(R)
-			C = roundValueE12(C)
-			Ra = roundValueE12(Ra)
-			Rb = roundValueE12(Rb)
+			R = find_nearest(E12,R)
+			C = find_nearest(E12,C)
+			Ra = find_nearest(E12,Ra)
+			Rb = find_nearest(E12,Rb)
 
 		temp = {'R1':R , 'R2':R , 'C1':C, 'C2': C, 'Ra':Ra, 'Rb': Rb }
 		return temp
@@ -174,10 +174,10 @@ class Celda:
 		C = 10 * 10**-9
 		R = 1/(Wo*C)
 		if self.roun == True:
-			C=roundValueE12(C)
-			R = roundValueE12(R)
-			Ra = roundValueE12(Ra)
-			Rb = roundValueE12(Rb)
+			C= find_nearest(E12,C)
+			R = find_nearest(E12,R)
+			Ra = find_nearest(E12,Ra)
+			Rb = find_nearest(E12,Rb)
 
 		temp = {'C':C, 'Ra': Ra , 'Rb':Rb, 'R':R}
 		return temp
@@ -190,35 +190,3 @@ class Celda:
 
 	def calcDoubleT(self):
 		return 'FALTA HACER'
-
-	def roundValueE12(self,val):
-		order = 0
-		temp = None
-		while val > 10:
-			val = val/10
-			order = order + 1
-		while val < 1:
-			val = val*10
-			order = order - 1
-		
-		temp = chooseBetween(val,1,1.2)
-		temp = temp + chooseBetween(val,1.2,1.5)
-		temp = temp + chooseBetween(val,1.5,1.8)
-		temp = temp + chooseBetween(val,1.8,2.2)
-		temp = temp + chooseBetween(val,2.2,2.7)
-		temp = temp + chooseBetween(val,2.7,3.3)
-		temp = temp + chooseBetween(val,3.3,3.9)
-		temp = temp + chooseBetween(val,3.9,4.7)
-		temp = temp + chooseBetween(val,4.7,5.6)
-		temp = temp + chooseBetween(val,5.6,6.8)
-		temp = temp + chooseBetween(val,6.8,8.2)
-		temp = temp + chooseBetween(val,8.2,10)
-		return (temp * (10**order))
-
-	def chooseBetween(self, val, num1,num2):
-		if val >= num1 and val < num2:
-			if (val-num1) < (num2 -val):
-				return num1
-			else:
-				return num2
-		return 0

@@ -334,7 +334,10 @@ class Approximation(object):
         self.num, self.den = signal.ellip(self.N, self.template.att_p, self.template.att_s, wn, self.filter_t, analog=True, output='ba')
         self.zeros, self.poles, self.gain = signal.ellip(self.N, self.template.att_p, self.template.att_s, wn, self.filter_t, analog=True, output='zpk')
         self.sos = signal.ellip(self.N, self.template.att_p, self.template.att_s, wn, self.filter_t, analog=True, output='sos')
-
+        num = self.num
+        den = self.den
+        print('Numerador=  '+str(num[0])+','+str(num[1])+','+str(num[2])+','+str(num[3])+','+str(num[4]))
+        print('Denominad=  '+str(den[0])+','+str(den[1])+','+str(den[2])+','+str(den[3])+','+str(den[4]))
 
     def __compute_approximation_norm_cauer(self):
         # compute the approximation for the normalized template
