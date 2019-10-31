@@ -9,6 +9,7 @@ import numpy as np
 from Template import Template
 from Approximation import Approximation
 import matplotlib.pyplot as mpl
+from distutils.spawn import find_executable
 
 ## Class inherited from Ui_MainWindow to customize GUI design and behaviour
 class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
@@ -17,8 +18,10 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         self.setupUi(self)
 
         # configure to use latex interpreter
-        mpl.rc('font',**{'family':'serif','serif':['Palatino']})
-        mpl.rc('text', usetex=True)
+        
+        if find_executable('latex'):
+            mpl.rc('font',**{'family':'serif','serif':['Palatino']})
+            mpl.rc('text', usetex=True)
 
         # array containing approximation types
         self.approx_types = ['butterworth', 'bessel', 'cheby_1', 'cheby_2', 'legendre', 'gauss', 'cauer']

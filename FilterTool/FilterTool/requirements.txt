@@ -3,3 +3,4 @@ setuptools==40.8.0
 matplotlib
 numpy
 PyQt5
+scipy
