@@ -224,12 +224,10 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         approx_index = self.approximationComboBox.currentIndex()
         self.approx_type = self.approx_types[approx_index]
 
-        if approx_index == 1: #Bessel
+        if approx_index == 1 or approx_index == 4 or approx_index == 5: #Bessel, Legendre y Gauss
             self.minMaxRadioButton.setEnabled(False)
-            self.maxQRadioButton.setEnabled(False)
         else:
             self.minMaxRadioButton.setEnabled(True)
-            self.maxQRadioButton.setEnabled(True)
 
         if self.customOrderRadioButton.isChecked():
             self.restriction = 'custom_order'
@@ -332,6 +330,7 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         # eliminar los plots de plotsLayout
         compute_options = [self.plot_attenuation, self.plot_phase, self.plot_group_delay, self.plot_step_response, self.plot_s_plane, self.plot_freq_resp]
         count = 0
+        
         for opt in compute_options:
             if opt:
                 count = count + 1
