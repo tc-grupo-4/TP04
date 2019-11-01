@@ -462,4 +462,3 @@ class Approximation(object):
         last_w = w[-1]
 
         return first_w, last_w
-
