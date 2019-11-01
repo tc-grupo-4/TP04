@@ -19,7 +19,7 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
     def __init__(self, parent=None):
         super(FilterTool, self).__init__(parent)
         self.setupUi(self)
-
+        
         # configure to use latex interpreter
         
         if find_executable('latex'):
@@ -95,13 +95,15 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         self.s_plane_plotted = False
         self.freq_response_plotted = False
         self.group_delay_plotted = False
-
-        self.preview_already_plotted = False
         
+        self.preview_already_plotted = False
+        self.currentApproximation=None
+        self.approximations=[]
         self.zerosGroupBoxes=[]
         self.polesGroupBoxes=[]
         self.stages=[]
         self.mainStageFigure=None
+        
 
 
         
@@ -289,18 +291,21 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
 
     def on_preview_clicked(self):
         index = self.approximationComboBox.currentIndex()
-        self.approximation = Approximation(self.template,
+        approximation = Approximation(self, self.template,
                                          restriction = self.restriction,
                                          min_order = self.minOrderSpinBox.value(),
                                          max_order = self.maxOrderSpinBox.value(),
                                          max_q = self.maxQdoubleSpinBox.value(),
                                          custom_order = self.customOrderSpinBox.value(),
                                          approx_type=self.approx_type)
-        self.approximation.compute_approximation()
+        
         left, right = self.template_axes.get_xlim()
         left_N, right_N = self.template_axes_norm.get_xlim()
         limits = {'left':left, 'right':right, 'left_N':left_N, 'right_N':right_N}
-        preview_lines = self.approximation.plot_preview_to_axes(self.template_axes, self.template_axes_norm, limits)
+        preview_lines = approximation.plot_preview_to_axes(self.template_axes, self.template_axes_norm, limits)
+        self.currentApproxComboBox.addItem("")
+        self.currentApproxComboBox.setItemText(0, QtCore.QCoreApplication.translate("MainWindow", approximation.legend))
+        self.approximations.append(approximation)
         for line in preview_lines:
             self.plotted_previews.append(line)
         # show canvas0
@@ -308,7 +313,7 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         # redraw canvas0
         self.template_canvas.draw()
         self.preview_already_plotted = True
-        self.initStages()
+        #self.initStages() 
 
 
     def on_clear_previews_clicked(self):
@@ -336,6 +341,10 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         self.template_canvas.draw()
         # set template submited to True
         self.template_submited = True
+        self.currentApproximation.clear()
+        self.approximations.clear()
+        self.setCurrentApproximation(None)
+        self.currentApproxComboBox.Items.clear()
         self.validate_approximation()
         
 
@@ -467,7 +476,15 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
             self.freq_response_plotted = True
             self.freq_canvas.draw()
             self.freq_canvas.show()
-    
+
+    def on_set_current_approx_clicked(self):
+        selectedLegend=self.currentApproxComboBox.currentText()
+        if selectedLegend != "None":
+            for approximation in self.approximations:
+                if approximation.legend==selectedLegend: selectedApproximation=approximation
+            self.setCurrentApproximation(selectedApproximation)
+        else : setCurrentApproximation(None)
+
     class groupBoxPar(QtWidgets.QGroupBox):
         radioButtons=[]
         par=None
@@ -476,115 +493,58 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
     class stageRadioButton(QtWidgets.QRadioButton):
         stage=None
         
-                
-
-  
-
-    def initStages(self):
-        zeros, poles, k=self.approximation.getZPKList()
-        self.mainStageFigure, self.mainStageFigureCanvas=self.resetTransferFigure()
-        polarPlot(zeros,poles,self.mainStageFigure.gca())
-        self.mainStageFigureCanvas.draw()
-        if self.stages != []:
-            for stage in self.stages:
-                plt.close(stage.figure)
-            self.stages.clear()
-        self.polesGroupBoxes.clear()
-        self.zerosGroupBoxes.clear()
-        a=len(self.approximation.den)
-        b=len(self.approximation.den_norm)
-        c=len(self.approximation.num)
-        d=len(self.approximation.num_norm)
-        _translate = QtCore.QCoreApplication.translate
-        for index in range(math.ceil(max(a,b,c,d)/2)):
-            figure, figurecanvas=self.getNewStageFigure()
-            stage=Etapa(figure,figurecanvas)
-            self.stages.append(stage)
-
-        for index, par in enumerate(zeros):
-            GroupBoxPar = self.groupBoxPar(self.tab_2)
-            GroupBoxPar.par=PointPair(par,"zero")
-            GroupBoxPar.setObjectName("GroupBoxZeros"+str(index))
-            gridLayout = QtWidgets.QGridLayout(GroupBoxPar)
-            gridLayout.setObjectName("gridLayoutZeros"+str(index))
-            
-            radioButtonLayoutPar = QtWidgets.QVBoxLayout()
-            radioButtonLayoutPar.setObjectName("radioButtonLayoutZeros"+str(index))
-            
-            
-            for indexetapa, etapa in enumerate(self.stages):
-                radioButtonEtapa = self.stageRadioButton(GroupBoxPar)
-                radioButtonEtapa.stage=etapa
-                radioButtonEtapa.setObjectName("radioButtonEtapa"+str(indexetapa)+"_Cero"+str(index))
-                radioButtonLayoutPar.addWidget(radioButtonEtapa)
-                GroupBoxPar.radioButtons.append(radioButtonEtapa) # quedan guardados?
-                radioButtonEtapa.setText(_translate("MainWindow", "Stage "+str(indexetapa)))
-
-            gridLayout.addLayout(radioButtonLayoutPar, 0, 0, 1, 1)
-            
-            self.paresGroupBoxLayout.addWidget(GroupBoxPar)
-            GroupBoxPar.setTitle(_translate("MainWindow", "Zeros Pair "+str(index)))
-            self.zerosGroupBoxes.append(GroupBoxPar)
-        
-        for index, par in enumerate(poles):
-            GroupBoxPar = self.groupBoxPar(self.tab_2)
-            GroupBoxPar.par=PointPair(par,"pole")
-            GroupBoxPar.setObjectName("GroupBoxPoles"+str(index))
-            gridLayout = QtWidgets.QGridLayout(GroupBoxPar)
-            gridLayout.setObjectName("gridLayoutPoles"+str(index))
-            
-            radioButtonLayoutPar = QtWidgets.QVBoxLayout()
-            radioButtonLayoutPar.setObjectName("radioButtonLayoutPoles"+str(index))
-            
-            
-            for indexetapa, etapa in enumerate(self.stages):
-                radioButtonEtapa = self.stageRadioButton(GroupBoxPar)
-                radioButtonEtapa.stage=etapa
-                radioButtonEtapa.setObjectName("radioButtonEtapa"+str(indexetapa)+"_Polo"+str(index))
-                radioButtonLayoutPar.addWidget(radioButtonEtapa)
-                GroupBoxPar.radioButtons.append(radioButtonEtapa) # quedan guardados?
-                radioButtonEtapa.setText(_translate("MainWindow", "Stage "+str(indexetapa)))
-
-            gridLayout.addLayout(radioButtonLayoutPar, 0, 0, 1, 1)
-            
-            self.paresGroupBoxLayout.addWidget(GroupBoxPar)
-            GroupBoxPar.setTitle(_translate("MainWindow", "Poles Pair "+str(index)))
-            self.polesGroupBoxes.append(GroupBoxPar)
-        
-            
     def updateStages(self):
-            for item in [self.polesGroupBoxes, self.zerosGroupBoxes]:
-                if item != []:     
-                    for groupbox in item:
-                        for radioButton in groupbox.radioButtons:
-                            if radioButton.isChecked():
-                                groupbox.par.assignToStage(radioButton.stage)
-                else: print("Update stages: no zero or pole detected")
-            for stage in self.stages:
+        self.currentApproximation.updateStages()
+
+    def clearLayout(self, layout):
+        if layout.count()!=0:
+            for i in reversed(range(layout.count())): 
+                tempWidget=layout.itemAt(i).widget()
+                if tempWidget is not None: tempWidget.setParent(None)
+    
+    def setCurrentApproximation(self, approximation):
+        self.clearLayout(self.horizontalLayout_30)
+        self.clearLayout(self.horizontalLayout_29)
+        if approximation is not None:
+            self.horizontalLayout_30.addWidget(approximation.mainStageFigureCanvas)
+            approximation.plotToStagesTab()
+            for stage in approximation.stages:  
+                self.horizontalLayout_29.addWidget(stage.figurecanvas)
                 stage.plotStage()
-                stage.figurecanvas.draw()
+        
+
+
+            #for item in [self.polesGroupBoxes, self.zerosGroupBoxes]:
+            #    if item != []:     
+            #        for groupbox in item:
+            #            for radioButton in groupbox.radioButtons:
+            #                if radioButton.isChecked():
+            #                    groupbox.par.assignToStage(radioButton.stage)
+            #    else: print("Update stages: no zero or pole detected")
+            #for stage in self.stages:
+            #    stage.plotStage()
+            #    stage.figurecanvas.draw()
             
     
-    def resetTransferFigure(self):
-        if self.mainStageFigure is not None: plt.close(self.mainStageFigure)
-        fig = Figure()
-        figure_canvas = FigureCanvas(fig)
-        self.horizontalLayout_30.addWidget(figure_canvas)
-        # show canvas0
-        figure_canvas.show()
-        # redraw canvas0
-        figure_canvas.draw()
-        return fig, figure_canvas
+    #def resetTransferFigure(self):
+    #    fig = Figure()
+    #    figure_canvas = FigureCanvas(fig)
+    #    self.horizontalLayout_30.addWidget(figure_canvas)
+    #    # show canvas0
+    #    figure_canvas.show()
+    #    # redraw canvas0
+    #    figure_canvas.draw()
+    #    return fig, figure_canvas
 
-    def getNewStageFigure(self):
-        fig = Figure()
-        figure_canvas = FigureCanvas(fig)
-        self.horizontalLayout_29.addWidget(figure_canvas)
-        # show canvas0
-        figure_canvas.show()
-        # redraw canvas0
-        figure_canvas.draw()
-        return fig, figure_canvas
+    #    def getNewStageFigure(self):
+    #        fig = Figure()
+    #        figure_canvas = FigureCanvas(fig)
+    #        return fig, figure_canvas
+    #    self.horizontalLayout_29.addWidget(figure_canvas)
+    #    # show canvas0
+    #    figure_canvas.show()
+    #    # redraw canvas0
+    #    figure_canvas.draw()
             
 def main():
     app = QtWidgets.QApplication(sys.argv)

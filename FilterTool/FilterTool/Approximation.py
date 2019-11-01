@@ -1,3 +1,8 @@
+from PyQt5 import QtGui, QtWidgets, QtCore
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_qt5agg import (
+    FigureCanvasQTAgg as FigureCanvas,
+    NavigationToolbar2QT as NavigationToolbar)
 from Template import Template
 from scipy import signal
 import math
@@ -9,8 +14,8 @@ from Etapa import *
 
 class Approximation(object):
     """description of class"""
-    def __init__(self, template,**kwargs):
-
+    def __init__(self, program, template,**kwargs):
+        self.program=program
         self.template = template
         self.restriction = kwargs['restriction']
         self.min_order = kwargs['min_order']
@@ -22,8 +27,11 @@ class Approximation(object):
         self.num=[]
         self.den_norm=[]
         self.num_norm=[]
-        
-
+        self.points=[]
+        self.stages=[]
+        self.index=len(program.approximations)
+        self.mainStageFigure=None
+        self.mainStageFigureCanvas=None
         if self.approx_type == 'butterworth':
             self.approx_type_pretty = 'Butterworth'
         elif self.approx_type == 'bessel':
@@ -40,6 +48,13 @@ class Approximation(object):
             self.approx_type_pretty = 'Cauer'
 
         self.__compute_parameters()
+        self.compute_approximation()
+        self.initStages()
+        self.updateStages()
+        self.initPoints()
+        self.initFigures()
+        self.program.setCurrentApproximation(self)
+        
 
 
     def __compute_parameters(self):
@@ -371,6 +386,7 @@ class Approximation(object):
     def plot_preview_to_axes(self, axes, axes_N, limits):
         n_str = str(self.order)
         legend = self.approx_type_pretty + ' - Order: ' + n_str
+        self.legend=legend
         left = limits['left']
         right = limits['right']
         left_N = limits['left_N']
@@ -560,11 +576,134 @@ class Approximation(object):
             for zero in pair:
                 zero=Zero(zero,colors[index])
                 tempPair.append(zero)
-            returnZeros.append(tempPair)
+            
+            returnZeros.append(PointPair(tempPair,"zero"))
         for index, pair in enumerate(poles):
             tempPair.clear()
             for pole in pair:
                 pole=Pole(pole,colors[index])
                 tempPair.append(pole)
-            returnPoles.append(tempPair)
+            returnPoles.append(PointPair(tempPair,"pole"))
         return returnZeros,returnPoles,k
+
+
+    class GroupBoxPar(QtWidgets.QGroupBox):
+        radioButtons=[]
+        par=None
+        
+        
+    class stageRadioButton(QtWidgets.QRadioButton):
+        stage=None
+
+
+
+    def initPoints(self): 
+        appIndex=self.index
+        zeros, poles, k=self.getZPKList()
+        _translate = QtCore.QCoreApplication.translate
+        for index, par in enumerate(zeros):
+            groupBox = self.GroupBoxPar(self.tab_2)
+            
+            groupBox.setObjectName("GroupBoxZeros"+str(index)+"approx"+str(appIndex))
+            gridLayout = QtWidgets.QGridLayout(groupBox)
+            gridLayout.setObjectName("gridLayoutZeros"+str(index)+"approx"+str(appIndex))
+            radioButtonLayoutPar = QtWidgets.QVBoxLayout()
+            radioButtonLayoutPar.setObjectName("radioButtonLayoutZeros"+str(index)+"approx"+str(appIndex))
+            
+            
+            for indexetapa, etapa in enumerate(self.stages):
+                radioButtonEtapa = self.stageRadioButton(groupBox)
+                radioButtonEtapa.stage=etapa
+                radioButtonEtapa.setObjectName("radioButtonEtapa"+str(indexetapa)+"_Cero"+str(index)+"approx"+str(appIndex))
+                radioButtonLayoutPar.addWidget(radioButtonEtapa)
+                groupBox.radioButtons.append(radioButtonEtapa)
+                radioButtonEtapa.setText(_translate("MainWindow", "Stage "+str(indexetapa)))
+
+            gridLayout.addLayout(radioButtonLayoutPar, 0, 0, 1, 1)
+            
+            self.program.paresGroupBoxLayout.addWidget(groupBox)
+            groupBox.setTitle(_translate("MainWindow", "Zeros Pair "+str(index)))
+            par.groupBox=groupBox
+        
+        for index, par in enumerate(poles):
+            groupBox = self.GroupBoxPar(self.program.tab_2)
+            
+            groupBox.setObjectName("GroupBoxPoles"+str(index)+"approx"+str(appIndex))
+            gridLayout = QtWidgets.QGridLayout(groupBox)
+            gridLayout.setObjectName("gridLayoutPoles"+str(index)+"approx"+str(appIndex))
+            radioButtonLayoutPar = QtWidgets.QVBoxLayout()
+            radioButtonLayoutPar.setObjectName("radioButtonLayoutPoles"+str(index)+"approx"+str(appIndex))
+            
+            
+            for indexetapa, etapa in enumerate(self.stages):
+                radioButtonEtapa = self.stageRadioButton(groupBox)
+                radioButtonEtapa.stage=etapa
+                radioButtonEtapa.setObjectName("radioButtonEtapa"+str(indexetapa)+"_Polo"+str(index)+"approx"+str(appIndex))
+                radioButtonLayoutPar.addWidget(radioButtonEtapa)
+                groupBox.radioButtons.append(radioButtonEtapa)
+                radioButtonEtapa.setText(_translate("MainWindow", "Stage "+str(indexetapa)))
+
+            gridLayout.addLayout(radioButtonLayoutPar, 0, 0, 1, 1)
+            
+            self.program.paresGroupBoxLayout.addWidget(groupBox)
+            groupBox.setTitle(_translate("MainWindow", "Pole Pair "+str(index)))
+            par.groupBox=groupBox
+
+        self.zeros, self.poles, self.k=zeros, poles, k
+
+
+    def initFigures(self): 
+        self.mainStageFigure=Figure()
+        self.mainStageFigureCanvas=FigureCanvas(self.mainStageFigure)
+    
+    def getNewStageFigure(self):
+        fig = Figure()
+        figure_canvas = FigureCanvas(fig)
+        return fig, figure_canvas   
+
+    def initStages(self):
+        #a=len(self.approximation.den)
+        #b=len(self.approximation.den_norm)
+        #c=len(self.approximation.num)
+        #d=len(self.approximation.num_norm)
+        for index in range(math.ceil(self.order/2)):
+            figure, figurecanvas=self.getNewStageFigure()
+            stage=Etapa(figure,figurecanvas)
+            self.stages.append(stage)
+
+   
+    def plotToStagesTab(self):
+        polarPlot(self.zeros, self.poles, self.mainStageFigure.gca())
+        #self.mainStageFigureCanvas.show()
+        self.mainStageFigureCanvas.draw()
+
+    #def initStages(self):
+        
+    #    self.mainStageFigure, self.mainStageFigureCanvas=self.resetTransferFigure()
+        
+        
+    #    polarPlot(zeros,poles,self.mainStageFigure.gca())
+    #    self.mainStageFigureCanvas.draw()
+    #    if self.stages != []:
+    #        for stage in self.stages:
+    #            plt.close(stage.figure)
+    #        self.stages.clear()
+        
+            
+    def updateStages(self):
+        for point in self.points:
+            for radioButton in point.groupBox.radioButtons:
+                if radioButton.isChecked():
+                    point.stage=radioButton.stage
+                    if point.isPole():
+                        radioButton.stage.poleList.append(point)
+                    elif point.isZero():
+                        radioButton.stage.zeroList.append(point)
+                else:
+                    try: radioButton.stage.poleList.remove(point)
+                    except: continue
+                    try: radioButton.stage.zeroList.remove(point)
+                    except: continue
+        
+        for stage in self.stages:
+            stage.plotStage()

@@ -43,6 +43,7 @@ class PointPair(list):
             else: raise ValueError("Invalid type value: "+str(type))
         self.color=self[0].color
         self.type=type
+        self.groupBox=None
 
     def assignToStage(self, stage):
         for point in self:
@@ -73,6 +74,7 @@ class Pole(Point):
 class Etapa:
     zeroList=[]
     poleList=[]
+    
     
     def __init__(self, figure=None,figurecanvas=None):
         if figure is not None: self.setFigure(figure)
@@ -117,10 +119,11 @@ class Etapa:
 
     def plotStage(self):
         if self.figure is not None:
-            if self.ax is not None: figure.delaxes(self.ax) 
+            if self.ax is not None: self.figure.delaxes(self.ax) 
             
             self.ax = self.figure.add_subplot(111, projection='polar')
             polarPlot(self.zeroList, self.poleList, self.ax)
+            self.figurecanvas.draw()
             self.figurecanvas.show()
             
         else: print("Error: Set figure first")
