@@ -35,7 +35,6 @@ class Approximation(object):
 
         self.__compute_parameters()
 
-
     def __compute_parameters(self):
         if self.template.filter_type == 'Low-pass':
             self.wp = self.template.omega_p1
@@ -61,6 +60,7 @@ class Approximation(object):
         elif self.restriction == 'min_max_order':
             self.order = self.__parameters_min_max_order()
 
+        return
 
     def __parameters_custom_order(self):
         order = self.custom_order
@@ -75,7 +75,7 @@ class Approximation(object):
         elif self.approx_type == 'cheby_2':
             N, self.wn = signal.cheb2ord(self.wp, self.ws, self.template.att_p, self.template.att_s, analog=True)
             N_norm, self.wn_N = signal.cheb1ord(self.template.omega_pN, self.template.omega_sN, self.template.att_p, self.template.att_s, analog=True)
-        elif self.approx_type == 'lgendre':
+        elif self.approx_type == 'legendre':
             pass
         elif self.approx_type == 'gauss':
             pass
@@ -84,7 +84,6 @@ class Approximation(object):
             N_norm, self.wn_N = signal.ellipord(self.template.omega_pN, self.template.omega_sN, self.template.att_p, self.template.att_s, analog=True)
 
         return order
-
 
     def __order_min_max_butter(self):
         N, self.wn = signal.buttord(self.wp, self.ws, self.template.att_p, self.template.att_s, analog=True)
@@ -99,23 +98,8 @@ class Approximation(object):
 
         return order
 
-
     def __order_min_max_cheby_1(self):
         N, self.wn = signal.cheb1ord(self.wp, self.ws, self.template.att_p, self.template.att_s, analog=True)
-        N_norm, self.wn_N = signal.cheb2ord(self.template.omega_pN, self.template.omega_sN, self.template.att_p, self.template.att_s, analog=True)
-
-        if N < self.min_order:
-            order = self.min_order
-        elif N > self.max_order:
-            order = self.max_order
-        else:
-            order = N
-
-        return order
-
-
-    def __order_min_max_cheby_2(self):
-        N, self.wn = signal.cheb2ord(self.wp, self.ws, self.template.att_p, self.template.att_s, analog=True)
         N_norm, self.wn_N = signal.cheb1ord(self.template.omega_pN, self.template.omega_sN, self.template.att_p, self.template.att_s, analog=True)
 
         if N < self.min_order:
@@ -127,6 +111,18 @@ class Approximation(object):
 
         return order
 
+    def __order_min_max_cheby_2(self):
+        N, self.wn = signal.cheb2ord(self.wp, self.ws, self.template.att_p, self.template.att_s, analog=True)
+        N_norm, self.wn_N = signal.cheb2ord(self.template.omega_pN, self.template.omega_sN, self.template.att_p, self.template.att_s, analog=True)
+
+        if N < self.min_order:
+            order = self.min_order
+        elif N > self.max_order:
+            order = self.max_order
+        else:
+            order = N
+
+        return order
 
     def __order_min_max_cauer(self):
         N, self.wn = signal.ellipord(self.wp, self.ws, self.template.att_p, self.template.att_s, analog=True)
@@ -140,7 +136,6 @@ class Approximation(object):
             order = N
 
         return order
-
 
     def __parameters_max_q(self):
         if self.approx_type == 'butterworth':
@@ -158,7 +153,7 @@ class Approximation(object):
             order_q = self.__order_max_q_cheby_2()
             N, self.wn = signal.cheb2ord(self.wp, self.ws, self.template.att_p, self.template.att_s, analog=True)
             N_norm, self.wn_N = signal.cheb1ord(self.template.omega_pN, self.template.omega_sN, self.template.att_p, self.template.att_s, analog=True)
-        elif self.approx_type == 'lgendre':
+        elif self.approx_type == 'legendre':
             pass
         elif self.approx_type == 'gauss':
             pass
@@ -171,7 +166,7 @@ class Approximation(object):
             self.order = N
         elif order_q <= N:
             self.order = order_q
-
+        return
 
     def __parameters_min_max_order(self):
         if self.approx_type == 'butterworth':
@@ -188,7 +183,6 @@ class Approximation(object):
             pass
         return order
         
-
     def __order_max_q_butter(self):
         found = False
         order = 0
@@ -204,7 +198,6 @@ class Approximation(object):
             if (q and max_q >= self.max_q ) or order > 15:
                 found = True
         return order
-
 
     def __order_max_q_bessel(self):
         found = False
@@ -222,7 +215,6 @@ class Approximation(object):
                 found = True
         return order
 
-
     def __order_max_q_cheby_1(self):
         found = False
         order = 0
@@ -238,7 +230,6 @@ class Approximation(object):
             if (q and max_q >= self.max_q ) or order > 15:
                 found = True
         return order
-
 
     def __order_max_q_cheby_2(self):
         found = False
@@ -256,7 +247,6 @@ class Approximation(object):
                 found = True
         return order
 
-
     def __order_max_q_cauer(self):
         found = False
         order = 0
@@ -273,7 +263,6 @@ class Approximation(object):
                 found = True
         return order
 
-
     def compute_approximation(self):
         if self.approx_type == 'butterworth':
             self.__compute_approximation_denorm_butter()
@@ -287,80 +276,65 @@ class Approximation(object):
         elif self.approx_type == 'cheby_2':
             self.__compute_approximation_denorm_cheby_2()
             self.__compute_approximation_norm_cheby_2()
-        elif self.approx_type == 'bessel':
-            pass
-        elif self.approx_type == 'gaiss':
-            pass
         elif self.approx_type == 'cauer':
             self.__compute_approximation_denorm_cauer()
             self.__compute_approximation_norm_cauer()
             pass
-
+        return
 
     def __compute_approximation_denorm_butter(self):
         self.num, self.den = signal.butter(self.order, self.wn, self.filter_t, analog=True, output='ba')
         self.zeros, self.poles, self.gain = signal.butter(self.order, self.wn, self.filter_t, analog=True, output='zpk')
         self.sos = signal.butter(self.order, self.wn, self.filter_t, analog=True, output='sos')
 
-
     def __compute_approximation_norm_butter(self):
         self.num_norm, self.den_norm = signal.butter(self.order, 1, 'lowpass', analog=True, output='ba')
         self.zeros_norm, self.poles_norm, self.gain_norm = signal.butter(self.order, self.wn_N, 'lowpass', analog=True, output='zpk')
         self.sos_norm = signal.butter(self.order, self.wn_N, 'lowpass', analog=True, output='sos')
-
 
     def __compute_approximation_denorm_bessel(self):
         self.num, self.den = signal.bessel(self.order, self.wp, self.filter_t, analog=True, output='ba')
         self.zeros, self.poles, self.gain = signal.bessel(self.order, self.wp, self.filter_t, analog=True, output='zpk')
         self.sos = signal.bessel(self.order, self.wp, self.filter_t, analog=True, output='sos')
 
-
     def __compute_approximation_norm_bessel(self):
         self.num_norm, self.den_norm = signal.bessel(self.order, self.template.omega_pN, 'lowpass', analog=True, output='ba')
         self.zeros_norm, self.poles_norm, self.gain_norm = signal.bessel(self.order, self.template.omega_pN, 'lowpass', analog=True, output='zpk')
         self.sos_norm = signal.bessel(self.order, self.template.omega_pN, 'lowpass', analog=True, output='sos')
-
 
     def __compute_approximation_denorm_cheby_1(self):
         self.num, self.den = signal.cheby1(self.order, self.template.att_p, self.wn, self.filter_t, analog=True, output='ba')
         self.zeros, self.poles, self.gain = signal.cheby1(self.order, self.template.att_p, self.wn, self.filter_t, analog=True, output='zpk')
         self.sos = signal.cheby1(self.order, self.template.att_p, self.wn, self.filter_t, analog=True, output='sos')
 
-
     def __compute_approximation_norm_cheby_1(self):        
         self.num_norm, self.den_norm = signal.cheby1(self.order, self.template.att_p, 1, 'lowpass', analog=True, output='ba')
         self.zeros_norm, self.poles_norm, self.gain_norm = signal.cheby1(self.order, self.template.att_p, self.wn_N, 'lowpass', analog=True, output='zpk')
         self.sos_norm = signal.cheby1(self.order, self.template.att_p, self.wn_N, 'lowpass', analog=True, output='sos')
-
 
     def __compute_approximation_denorm_cheby_2(self):
         self.num, self.den = signal.cheby2(self.order, self.template.att_s, self.wn, self.filter_t, analog=True, output='ba')
         self.zeros, self.poles, self.gain = signal.cheby2(self.order, self.template.att_s, self.wn, self.filter_t, analog=True, output='zpk')
         self.sos = signal.cheby2(self.order, self.template.att_s, self.wn, self.filter_t, analog=True, output='sos')
 
-
     def __compute_approximation_norm_cheby_2(self):
-        self.num_norm, self.den_norm = signal.cheby2(self.order, self.template.att_s, 1, 'lowpass', analog=True, output='ba')
-        self.zeros_norm, self.poles_norm, self.gain_norm = signal.cheby2(self.order, self.template.att_s, self.wn, 'lowpass', analog=True, output='zpk')
-        self.sos_norm = signal.cheby2(self.order, self.template.att_s, self.wn, 'lowpass', analog=True, output='sos')
-
+        self.num_norm, self.den_norm = signal.cheby2(self.order, self.template.att_s, self.wn_N, 'lowpass', analog=True, output='ba')
+        self.zeros_norm, self.poles_norm, self.gain_norm = signal.cheby2(self.order, self.template.att_s, self.wn_N, 'lowpass', analog=True, output='zpk') ##Aca cambie un 1 por self.wn_N
+        self.sos_norm = signal.cheby2(self.order, self.template.att_s, self.wn_N, 'lowpass', analog=True, output='sos')
 
     def __compute_approximation_denorm_cauer(self):
         self.num, self.den = signal.ellip(self.order, self.template.att_p, self.template.att_s, self.wn, self.filter_t, analog=True, output='ba')
         self.zeros, self.poles, self.gain = signal.ellip(self.order, self.template.att_p, self.template.att_s, self.wn, self.filter_t, analog=True, output='zpk')
         self.sos = signal.ellip(self.order, self.template.att_p, self.template.att_s, self.wn, self.filter_t, analog=True, output='sos')
 
-
-
     def __compute_approximation_norm_cauer(self):
-        self.num_norm, self.den_norm = signal.ellip(self.order, self.template.att_p, self.template.att_s, 1, 'lowpass', analog=True, output='ba')
-        self.zeros_norm, self.poles_norm, self.gain_norm = signal.ellip(self.order, self.template.att_p, self.template.att_s, self.wn, 'lowpass', analog=True, output='zpk')
-        self.sos_norm = signal.ellip(self.order, self.template.att_p, self.template.att_s, self.wn, 'lowpass', analog=True, output='sos')
-
+        self.num_norm, self.den_norm = signal.ellip(self.order, self.template.att_p, self.template.att_s, self.wn_N, 'lowpass', analog=True, output='ba')
+        self.zeros_norm, self.poles_norm, self.gain_norm = signal.ellip(self.order, self.template.att_p, self.template.att_s, self.wn_N, 'lowpass', analog=True, output='zpk')
+        self.sos_norm = signal.ellip(self.order, self.template.att_p, self.template.att_s, self.wn_N, 'lowpass', analog=True, output='sos')
 
     def compute_factorization(self):
         self.sos = signal.zpk2sos(selg.zeros, self.poles, self.gain)
-
+        return
 
     def plot_preview_to_axes(self, axes, axes_N, limits):
         n_str = str(self.order)
@@ -369,25 +343,25 @@ class Approximation(object):
         right = limits['right']
         left_N = limits['left_N']
         right_N = limits['right_N']
-        
-        w, h = signal.freqs(self.den, self.num,worN = np.logspace(math.log10(left), math.log10(right), 1000))
-        line = axes.semilogx(w, 20 * np.log10(abs(h)), label=legend)
-        max_value = np.max(20 * np.log10(abs(h)))
-        axes.legend(loc='best')
-        bottom, top = axes.get_ylim()
-        if max_value > top:
-            axes.set_ylim((bottom, max_value))
-        w_n, h_n = signal.freqs(self.den_norm, self.num_norm, np.logspace(math.log10(left_N), math.log10(right_N), 1000))
-        line_N = axes_N.semilogx(w_n, 20 * np.log10(abs(h_n)), label=legend)
-        axes_N.legend(loc='best')
-        max_value = np.max(20 * np.log10(abs(h_n)))
-        axes.legend(loc='best')
-        bottom, top = axes_N.get_ylim()
-        if max_value > top:
-            axes_N.set_ylim((bottom, max_value))
-
+        line = None
+        line_N = None
+        if self.approx_type != 'legendre' and self.approx_type != 'gauss':
+            w, h = signal.freqs(self.den, self.num,worN = np.logspace(math.log10(left), math.log10(right), 1000))
+            line = axes.semilogx(w, 20 * np.log10(abs(h)), label=legend)
+            max_value = np.max(20 * np.log10(abs(h)))
+            axes.legend(loc='best')
+            bottom, top = axes.get_ylim()
+            if max_value > top:
+                axes.set_ylim((bottom, max_value))
+            w_n, h_n = signal.freqs(self.den_norm, self.num_norm, np.logspace(math.log10(left_N), math.log10(right_N), 1000))
+            line_N = axes_N.semilogx(w_n, 20 * np.log10(abs(h_n)), label=legend)
+            axes_N.legend(loc='best')
+            max_value = np.max(20 * np.log10(abs(h_n)))
+            axes.legend(loc='best')
+            bottom, top = axes_N.get_ylim()
+            if max_value > top:
+                axes_N.set_ylim((bottom, max_value))
         return [line,line_N]
-
 
     def plot_attenuation_to_axes(self, axes):
         legend = 'Attenuation'
@@ -401,7 +375,6 @@ class Approximation(object):
         last_w = w.item(n_points-1)
 
         return first_w, last_w
-
 
     def plot_phase_to_axes(self, axes,limits):
         legend = 'Phase'
@@ -419,7 +392,6 @@ class Approximation(object):
 
         return first_w, last_w
 
-
     def plot_group_delay_to_axes(self, axes, limits):
         legend = 'Group Delay'
         n_points = 1000
@@ -432,7 +404,6 @@ class Approximation(object):
 
         return first_w, last_w
 
-
     def plot_step_response_to_axes(self, axes):
         legend = 'Step Response'
         n_points = 1000
@@ -440,7 +411,6 @@ class Approximation(object):
         axes.plot(t, y, label=legend)
         axes.set_xlabel(r'Time(seg)')
         axes.set_ylabel(r'V[Volts]')
-
 
     def plot_s_plane_to_axes(self, axes):
         legend_poles = 'Poles'
@@ -475,7 +445,7 @@ class Approximation(object):
             axes.scatter(theta_poles, r_poles, label=legend_poles, marker=marker_poles)
         if theta_zeros:
             axes.scatter(theta_zeros, r_zeros, label=legend_zeros, marker=marker_zeros)
-
+        return
 
     def plot_freq_response_to_axes(self, axes, limits):
         legend = 'Frequency Response[dB]'

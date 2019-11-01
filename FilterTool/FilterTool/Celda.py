@@ -189,4 +189,8 @@ class Celda:
 		return 'FALTA HACER'
 
 	def calcDoubleT(self):
-		return 'FALTA HACER'
+		nom = self.tf[0]
+		den = self.tf[1]
+		Rb = 1e3
+		Ra = (nom[1]-1)*Rb
+		

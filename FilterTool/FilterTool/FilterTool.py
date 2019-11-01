@@ -144,12 +144,14 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         selectedText = self.filterTypeComboBox.currentText()
         if selectedText == 'Low-pass':
             self.hide_pass_stop_2()
-        if selectedText == 'High-Pass':
+        if selectedText == 'High-pass':
             self.hide_pass_stop_2()
         if selectedText == 'Band-pass':
             self.show_pass_stop_2()
         if selectedText == 'Band-reject':
             self.show_pass_stop_2()
+        return
+
 
 
     ## Handler that validets a new template parameter setting.
@@ -293,12 +295,14 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         limits = {'left':left, 'right':right, 'left_N':left_N, 'right_N':right_N}
         preview_lines = self.approximation.plot_preview_to_axes(self.template_axes, self.template_axes_norm, limits)
         for line in preview_lines:
-            self.plotted_previews.append(line)
+            if line != None:
+                self.plotted_previews.append(line)
         # show canvas0
         self.template_canvas.show()
         # redraw canvas0
         self.template_canvas.draw()
         self.preview_already_plotted = True
+        return
 
 
     def on_clear_previews_clicked(self):
@@ -457,6 +461,8 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
             self.freq_response_plotted = True
             self.freq_canvas.draw()
             self.freq_canvas.show()
+        return
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
