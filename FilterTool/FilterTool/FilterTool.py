@@ -10,6 +10,8 @@ from Template import Template
 from Approximation import Approximation
 import matplotlib.pyplot as mpl
 from distutils.spawn import find_executable
+import math
+from Etapa import *
 
 ## Class inherited from Ui_MainWindow to customize GUI design and behaviour
 class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
@@ -26,6 +28,8 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         # array containing approximation types
         self.approx_types = ['butterworth', 'bessel', 'cheby_1', 'cheby_2', 'legendre', 'gauss', 'cauer']
 
+
+        self.setStagesPushButton.clicked.connect(self.updateStages)
         # connect 'preview aproximation' button to handler
         self.previewApproxButton.clicked.connect(self.on_preview_clicked)
         # connect clear approximation button to handler
@@ -92,6 +96,10 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         self.group_delay_plotted = False
 
         self.preview_already_plotted = False
+        
+        self.zerosGroupBoxes=[]
+        self.polesGroupBoxes=[]
+        self.stages=[]
 
 
 
@@ -299,6 +307,7 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         # redraw canvas0
         self.template_canvas.draw()
         self.preview_already_plotted = True
+        self.initStages()
 
 
     def on_clear_previews_clicked(self):
@@ -457,7 +466,109 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
             self.freq_response_plotted = True
             self.freq_canvas.draw()
             self.freq_canvas.show()
+    
+    class groupBoxPar:
+        radioButtons=[]
+        par=None
+        def __init__(self, groupbox):
+            self.groupbox=groupbox
+    
+    class stageRadioButton:
+        stage=None
+        def __init__(self, radiobutton):
+            self.radiobutton=radiobutton
+            
 
+  
+
+    def initStages(self):
+        zeros, poles, k=self.approximation.getZPKList()
+        
+        self.stages.clear()
+        self.polesGroupBoxes.clear()
+        self.zerosGroupBoxes.clear()
+        a=len(self.approximation.den)
+        b=len(self.approximation.den_norm)
+        c=len(self.approximation.num)
+        d=len(self.approximation.num_norm)
+
+        for index in range(math.ceil(max(a,b,c,d)/2)):
+            stage=Etapa(figure=self.getNewStageFigure())
+            self.stages.append(stage)
+
+        for index, par in enumerate(zeros):
+            GroupBoxPar = groupBoxPar(groupbox=QtWidgets.QGroupBox(self.tab_2))
+            GroupBoxPar.par=par
+            GroupBoxPar.groupbox.setObjectName("GroupBoxZeros"+str(index))
+            gridLayout = QtWidgets.QGridLayout(self.GroupBoxPar.groupbox)
+            gridLayout.setObjectName("gridLayoutZeros"+str(index))
+            
+            radioButtonLayoutPar = QtWidgets.QVBoxLayout()
+            radioButtonLayoutPar.setObjectName("radioButtonLayoutZeros"+str(index))
+            
+            radioButtonsDelGroupBox=[]
+            for indexetapa, etapa in enumerate(self.stages):
+                radioButtonEtapa = stageRadioButton(radiobutton=QtWidgets.QRadioButton(self.GroupBoxPar.groupbox))
+                radioButtonEtapa.stage=etapa
+                radioButtonEtapa.radiobutton.setObjectName("radioButtonEtapa"+str(indexetapa)+"_Cero"+str(index))
+                radioButtonLayoutPar.addWidget(radioButtonEtapa.radiobutton)
+                GroupBoxPar.radioButtons.append(radioButtonEtapa) # quedan guardados?
+                radioButtonEtapa.radiobutton.setText(_translate("MainWindow", "Stage "+str(indexetapa)))
+
+            gridLayout.addLayout(radioButtonLayoutPar, 0, 0, 1, 1)
+            
+            self.paresGroupBoxLayout.addWidget(GroupBoxPar.groupbox)
+            GroupBoxPar.groupbox.setTitle(_translate("MainWindow", "Zeros Pair "+str(index)))
+            self.zerosGroupBoxes.append(GroupBoxPar)
+        
+        for index, par in enumerate(poles):
+            GroupBoxPar = groupBoxPar(groupbox=QtWidgets.QGroupBox(self.tab_2))
+            GroupBoxPar.par=par
+            GroupBoxPar.groupbox.setObjectName("GroupBoxPoles"+str(index))
+            gridLayout = QtWidgets.QGridLayout(self.GroupBoxPar.groupbox)
+            gridLayout.setObjectName("gridLayoutPoles"+str(index))
+            
+            radioButtonLayoutPar = QtWidgets.QVBoxLayout()
+            radioButtonLayoutPar.setObjectName("radioButtonLayoutPoles"+str(index))
+            
+            radioButtonsDelGroupBox=[]
+            for indexetapa, etapa in enumerate(self.stages):
+                radioButtonEtapa = stageRadioButton(radiobutton=QtWidgets.QRadioButton(self.GroupBoxPar.groupbox))
+                radioButtonEtapa.stage=etapa
+                radioButtonEtapa.radiobutton.setObjectName("radioButtonEtapa"+str(indexetapa)+"_Polo"+str(index))
+                radioButtonLayoutPar.addWidget(radioButtonEtapa.radiobutton)
+                GroupBoxPar.radioButtons.append(radioButtonEtapa) # quedan guardados?
+                radioButtonEtapa.radiobutton.setText(_translate("MainWindow", "Stage "+str(indexetapa)))
+
+            gridLayout.addLayout(radioButtonLayoutPar, 0, 0, 1, 1)
+            
+            self.paresGroupBoxLayout.addWidget(GroupBoxPar.groupbox)
+            GroupBoxPar.groupbox.setTitle(_translate("MainWindow", "Poles Pair "+str(index)))
+            self.polesGroupBoxes.append(GroupBoxPar)
+        
+            
+    def updateStages(self):
+            for item in [self.polesGroupBoxes, self.zerosGroupBoxes]:
+                if item != []:     
+                    for groupbox in item:
+                        for radioButton in groupbox.radioButtons:
+                            if radioButton.radiobutton.isChecked():
+                                for point in groupbox.par:
+                                    point.assignToStage(radioButton.stage)
+                else: print("Update stages: no zero or pole detected")
+            
+    
+
+
+    def getNewStageFigure(self):
+        fig = Figure()
+        figure_canvas = FigureCanvas(fig)
+        self.horizontalLayout_29.addWidget(figure_canvas)
+        # show canvas0
+        figure_canvas.show()
+        # redraw canvas0
+        figure_canvas.draw()
+            
 def main():
     app = QtWidgets.QApplication(sys.argv)
     app.setStyle('Fusion')

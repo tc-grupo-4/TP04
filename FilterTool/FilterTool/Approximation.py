@@ -5,6 +5,7 @@ import numpy as np
 import cmath
 # TODO: sacar solo debug
 import matplotlib.pyplot as mpl
+from Etapa import *
 
 class Approximation(object):
     """description of class"""
@@ -17,6 +18,11 @@ class Approximation(object):
         self.max_q = kwargs['max_q']
         self.custom_order = kwargs['custom_order']
         self.approx_type = kwargs['approx_type']
+        self.den=[]
+        self.num=[]
+        self.den_norm=[]
+        self.num_norm=[]
+        
 
         if self.approx_type == 'butterworth':
             self.approx_type_pretty = 'Butterworth'
@@ -493,3 +499,64 @@ class Approximation(object):
 
         return first_w, last_w
 
+    def getZPKList(self):
+        ##Recibe un nominador y denominador de una transferencia y devuelve:
+        ##  -Zeros: Una lista de listas de zeros agrupados de a par con parte real igual
+        ##      Pej: Si los zeros son   Z1 = 1+1j
+        ##                              Z2 = 1-1j
+        ##                              Z3 = 3
+        ##              -> Zeros = [ [1+1j , 1-1j], [3] ]
+        ##  -Poles: una lista de listas de polos agrupados de la misma manera
+        ##  -K: Ganancia total de la transferenci
+        z,p,k = signal.tf2zpk(self.num,self.den)
+        zeros = []
+        poles = []
+        used = []
+        colors = ['r','g','b','c','m','y','k']
+        for i in range(0,len(z)):
+            if i not in used:
+                grouped = False
+                used.append(i)
+                for u in range(0,len(z)):
+                    if u != i:
+                        if np.real(z[i]) == np.real(z[u]) and np.real(z[i]) != 0 and u not in used:
+                            temp = [z[i],z[u]]
+                            used.append(u)
+                            zeros.append(temp)
+                            grouped = True
+                        elif np.imag(z[i])**2 == np.imag(z[u])**2 and np.imag(z[i]) != 0 and u not in used:
+                            temp = [z[i],z[u]]
+                            used.append(u)
+                            zeros.append(temp)
+                            grouped = True
+                if grouped == False:
+                    temp = [z[i]]
+                    zeros.append(temp)
+        used = []
+        for i in range(0,len(p)):
+            if i not in used:
+                grouped = False
+                used.append(i)
+                for u in range(0,len(p)):
+                    if u != i:
+                        if np.real(p[i]) == np.real(p[u]) and u not in used:
+                            used.append(u)
+                            temp = [p[i],p[u]]
+                            poles.append(temp)
+                            grouped = True
+                        if np.imag(p[i])**2 == np.imag(p[u])**2 and u not in used:
+                            used.append(u)
+                            temp = [p[i],p[u]]
+                            poles.append(temp)
+                            grouped = True
+                if grouped == False:
+                    temp = [p[i]]
+                    poles.append(temp)
+        
+        for index, pair in enumerate(zeros):
+            for zero in pair:
+                zero=Zero(zero,colors[index])
+        for index, pair in enumerate(poles):
+            for pole in pair:
+                pole=Pole(pole,colors[index])
+        return zeros,poles,k

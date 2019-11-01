@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>868</width>
+    <height>820</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Filter Tool</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout_12">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="tabFiltros">
+       <attribute name="title">
+        <string>Filter</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QDockWidget" name="dockWidget_2">
+            <property name="maximumSize">
+             <size>
+              <width>300</width>
+              <height>524287</height>
+             </size>
+            </property>
+            <property name="features">
+             <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+            </property>
+            <property name="windowTitle">
+             <string>Filter Parameters</string>
+            </property>
+            <widget class="QWidget" name="dockWidgetContents_3">
+             <layout class="QGridLayout" name="gridLayout_18">
+              <item row="0" column="0">
+               <layout class="QVBoxLayout" name="verticalLayout_3">
+                <item>
+                 <widget class="QGroupBox" name="groupBox_9">
+                  <property name="title">
+                   <string>Template</string>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_19">
+                   <item row="1" column="1">
+                    <layout class="QGridLayout" name="gridLayout_20">
+                     <item row="0" column="0">
+                      <layout class="QHBoxLayout" name="horizontalLayout_10">
+                       <item>
+                        <widget class="QLabel" name="label_9">
+                         <property name="text">
+                          <string>Stop Band 1</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QDoubleSpinBox" name="stopBand1DoubleSpinBox_3">
+                         <property name="maximum">
+                          <double>99999999999.000000000000000</double>
+                         </property>
+                         <property name="singleStep">
+                          <double>0.010000000000000</double>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                     <item row="0" column="1">
+                      <layout class="QHBoxLayout" name="stopBand2_horizontalLayout_3">
+                       <item>
+                        <widget class="QLabel" name="stopBand2_label_3">
+                         <property name="text">
+                          <string>Stop Band 2</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QDoubleSpinBox" name="stopBand2DoubleSpinBox_3">
+                         <property name="maximum">
+                          <double>99999999999.000000000000000</double>
+                         </property>
+                         <property name="singleStep">
+                          <double>0.010000000000000</double>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                     <item row="1" column="0">
+                      <layout class="QHBoxLayout" name="horizontalLayout_11">
+                       <item>
+                        <widget class="QLabel" name="label_10">
+                         <property name="text">
+                          <string>Pass Band 1</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QDoubleSpinBox" name="passBand1DoubleSpinBox_3">
+                         <property name="maximum">
+                          <double>99999999999.000000000000000</double>
+                         </property>
+                         <property name="singleStep">
+                          <double>0.010000000000000</double>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                     <item row="1" column="1">
+                      <layout class="QHBoxLayout" name="passBand2_horizontalLayout_3">
+                       <item>
+                        <widget class="QLabel" name="passBand2_label_3">
+                         <property name="text">
+                          <string>Pass Band 2</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QDoubleSpinBox" name="passBand2DoubleSpinBox_3">
+                         <property name="maximum">
+                          <double>99999999999.000000000000000</double>
+                         </property>
+                         <property name="singleStep">
+                          <double>0.010000000000000</double>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                     <item row="2" column="0">
+                      <layout class="QHBoxLayout" name="horizontalLayout_12">
+                       <item>
+                        <widget class="QLabel" name="label_11">
+                         <property name="text">
+                          <string>Min Attenuated</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QDoubleSpinBox" name="minAttnDoubleSpinBox_3"/>
+                       </item>
+                      </layout>
+                     </item>
+                     <item row="2" column="1">
+                      <layout class="QHBoxLayout" name="horizontalLayout_13">
+                       <item>
+                        <widget class="QLabel" name="label_12">
+                         <property name="text">
+                          <string>Max Attenuated</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QDoubleSpinBox" name="maxAttnDoubleSpinBox_3"/>
+                       </item>
+                      </layout>
+                     </item>
+                    </layout>
+                   </item>
+                   <item row="2" column="1">
+                    <widget class="QPushButton" name="setTemplateButton_3">
+                     <property name="text">
+                      <string>Set Template</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_24">
+                     <item>
+                      <widget class="QLabel" name="label_19">
+                       <property name="text">
+                        <string>Type</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QComboBox" name="filterTypeComboBox_3">
+                       <item>
+                        <property name="text">
+                         <string>Low-pass</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>High-pass</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Band-pass</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Band-reject</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>All-pass</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QGroupBox" name="groupBox_10">
+                  <property name="title">
+                   <string>Approximation Settings</string>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_3">
+                   <item row="2" column="0">
+                    <widget class="QGroupBox" name="groupBox_11">
+                     <property name="title">
+                      <string>Parameters</string>
+                     </property>
+                     <layout class="QGridLayout" name="gridLayout_21">
+                      <item row="1" column="0">
+                       <layout class="QHBoxLayout" name="horizontalLayout_25">
+                        <item>
+                         <widget class="QRadioButton" name="maxQRadioButton_3">
+                          <property name="text">
+                           <string>Max Q Allowed</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QDoubleSpinBox" name="maxQdoubleSpinBox_3"/>
+                        </item>
+                       </layout>
+                      </item>
+                      <item row="0" column="0">
+                       <layout class="QHBoxLayout" name="horizontalLayout_26">
+                        <item>
+                         <widget class="QRadioButton" name="minMaxRadioButton_3">
+                          <property name="text">
+                           <string>Min Order</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QSpinBox" name="minOrderSpinBox_3"/>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="label_20">
+                          <property name="text">
+                           <string>Max Order</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QSpinBox" name="maxOrderSpinBox_3"/>
+                        </item>
+                       </layout>
+                      </item>
+                      <item row="2" column="0">
+                       <layout class="QHBoxLayout" name="horizontalLayout_27">
+                        <item>
+                         <widget class="QRadioButton" name="customOrderRadioButton_3">
+                          <property name="text">
+                           <string>Custom Order</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QSpinBox" name="customOrderSpinBox_3"/>
+                        </item>
+                       </layout>
+                      </item>
+                      <item row="3" column="0">
+                       <widget class="QPushButton" name="previewApproxButton_3">
+                        <property name="text">
+                         <string>Preview Aproximation</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="4" column="0">
+                       <widget class="QPushButton" name="clearApproxButton_3">
+                        <property name="text">
+                         <string>Clear Approximations</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <layout class="QHBoxLayout" name="horizontalLayout_28">
+                     <item>
+                      <widget class="QLabel" name="label_21">
+                       <property name="text">
+                        <string>Approximation</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QComboBox" name="approximationComboBox_3">
+                       <item>
+                        <property name="text">
+                         <string>Butterworth</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Bessel</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Chebyshev Type I</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Chebyshev Type II</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Legendre</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Gauss</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Cauer elliptic</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QGroupBox" name="groupBox_12">
+                  <property name="title">
+                   <string>Plots</string>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_22">
+                   <item row="2" column="0">
+                    <widget class="QPushButton" name="saveResultsPushButton_3">
+                     <property name="toolTip">
+                      <string>Save results to .PDF report</string>
+                     </property>
+                     <property name="text">
+                      <string>Save Results</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="0">
+                    <layout class="QGridLayout" name="gridLayout_23">
+                     <item row="0" column="0">
+                      <widget class="QCheckBox" name="attenuationCurvesCheckBox_3">
+                       <property name="text">
+                        <string>Attenuation Curves</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QCheckBox" name="stepResponseCheckBox_3">
+                       <property name="text">
+                        <string>Step Response</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="0">
+                      <widget class="QCheckBox" name="phaseCheckBox_3">
+                       <property name="text">
+                        <string>Phase</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="1">
+                      <widget class="QCheckBox" name="sPlaneCheckBox_3">
+                       <property name="text">
+                        <string>S Plane Diagram</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="0">
+                      <widget class="QCheckBox" name="groupDelayCheckBox_3">
+                       <property name="text">
+                        <string>Group Delay</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="1">
+                      <widget class="QCheckBox" name="freqResponseCheckBox_3">
+                       <property name="text">
+                        <string>Frequency Response</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QPushButton" name="computePushButton_3">
+                     <property name="toolTip">
+                      <string>Compute approximation</string>
+                     </property>
+                     <property name="text">
+                      <string>Compute</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="plotsLayout_2"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabEtapas">
+       <attribute name="title">
+        <string>Stages</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_24">
+        <item row="0" column="0">
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_30">
+            <item>
+             <widget class="QFrame" name="frameTotal">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="paresGroupBoxLayout">
+              <item>
+               <widget class="QGroupBox" name="GroupBoxPar1">
+                <property name="title">
+                 <string>Par ceros 1</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_25">
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="radioButtonLayoutPar1">
+                   <item>
+                    <widget class="QRadioButton" name="radioButtonEtapa1">
+                     <property name="text">
+                      <string>Etapa 1</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QRadioButton" name="radioButtonEtapa2">
+                     <property name="text">
+                      <string>Etapa2</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_29">
+            <item>
+             <widget class="QFrame" name="frameEtapa1">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="frameEtapa2">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>868</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionParameters">
+   <property name="text">
+    <string>Parameters</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

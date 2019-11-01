@@ -106,3 +106,4 @@ venv.bak/
 # Custom(Doxygen)
 /Doxygen/*
 !/Doxygen/Doxyfile.ini
+/FilterTool/FilterTool/env1
