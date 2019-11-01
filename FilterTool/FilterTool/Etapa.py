@@ -5,6 +5,10 @@ import matplotlib.pyplot as plt
 import random
 from Approximation import *
 
+#def convertValueListToPointList(valueList,type):
+#    for index, valuePair in enumerate(valueList):
+#        for value in valueList:
+#            if type == "zero": point=Zero(value, index)
 
 
 
@@ -24,11 +28,35 @@ class Point(object):
             self.pha = -3.142/2
         if self.re < 0:
             self.pha = 3.1415 - self.pha
-    def assignToStage(self, stage):
-        if self.Etapa is not None: self.Etapa.removePoints(self)
-        self.Etapa=stage
-        stage.addPoints(self)
+    
 
+class PointPair(list):
+    def __init__(self, points,type,color=None):
+        if isinstance(points[0],Point):
+            self.extend(points)
+        else:
+            if color is None: color="r"
+            if type == "zero":
+                self.extend([Zero(points[0],color),Zero(points[1],color)])
+            elif type == "pole":
+                self.extend([Pole(points[0],color),Pole(points[1],color)])
+            else: raise ValueError("Invalid type value: "+str(type))
+        self.color=self[0].color
+        self.type=type
+
+    def assignToStage(self, stage):
+        for point in self:
+            if point.Etapa is not None: point.Etapa.removePoints(self)
+            point.Etapa=stage
+            self.Etapa=stage
+        stage.addPoints(self)
+    
+    def isZero(self): 
+        if self.type=="zero": return True
+        else: return False
+    def isPole(self): 
+        if self.type=="pole": return True
+        else: return False
 
 class Zero(Point):
     def isZero(self): 
@@ -46,21 +74,24 @@ class Etapa:
     zeroList=[]
     poleList=[]
     
-    def __init__(self, figure=None):
+    def __init__(self, figure=None,figurecanvas=None):
         if figure is not None: self.setFigure(figure)
-        
+        if figurecanvas is not None: self.setFigureCanvas(figurecanvas)
+        self.ax=None
 
-    def addPoints(self, point):
-        if point.isPole(): self.poleList.append(pointPair)
-        elif point.isZero(): self.zeroList.append(pointPair)
+    def addPoints(self, pointPair):
+        if pointPair.isPole(): self.poleList.append(pointPair)
+        elif pointPair.isZero(): self.zeroList.append(pointPair)
         else : return
         for point in pointPair: point.Etapa=self
+        pointPair.Etapa=self
 
-    def removePoints(self, point):
-        if point.isPole(): self.poleList.remove(pointPair)
-        elif point.isZero(): self.zeroList.remove(pointPair)
+    def removePoints(self, pointPair):
+        if pointPair.isPole(): self.poleList.remove(pointPair)
+        elif pointPair.isZero(): self.zeroList.remove(pointPair)
         else : return
         for point in pointPair: point.Etapa=None
+        pointPair.Etapa=None
 
     def getTransferFunction(self):
         return self.num, self.den
@@ -81,13 +112,16 @@ class Etapa:
     def setFigure(self, figure):
         self.figure=figure
 
-    def plotStage(zeros, poles, figure):
+    def setFigureCanvas(self, figurecanvas):
+        self.figurecanvas=figurecanvas
+
+    def plotStage(self):
         if self.figure is not None:
             if self.ax is not None: figure.delaxes(self.ax) 
             
-            self.ax = figure.add_subplot(111, projection='polar')
-            polarPlot(self.zeros, self.poles, self.ax)
-            figure.show()
+            self.ax = self.figure.add_subplot(111, projection='polar')
+            polarPlot(self.zeroList, self.poleList, self.ax)
+            self.figurecanvas.show()
             
         else: print("Error: Set figure first")
    
@@ -97,7 +131,8 @@ def polarPlot(zeros, poles, ax):
                 
     for polePair in poles:    
         for pole in polePair: ax.plot(pole.pha,pole.mod,'x',color=pole.color)
-    
+   
+
 
 # num = [0.8912509381337455,0.0,6832402540.638172,0.0,7.24572875462745e+18]
 # den = [1.0,337194.6633703208,92412209932.89781,8400336197283562.0,1.2883166302894993e+21]
