@@ -552,11 +552,19 @@ class Approximation(object):
                 if grouped == False:
                     temp = [p[i]]
                     poles.append(temp)
-        
+        returnPoles=[]
+        tempPair=[]
+        returnZeros=[]
         for index, pair in enumerate(zeros):
+            tempPair.clear()
             for zero in pair:
                 zero=Zero(zero,colors[index])
+                tempPair.append(zero)
+            returnZeros.append(tempPair)
         for index, pair in enumerate(poles):
+            tempPair.clear()
             for pole in pair:
                 pole=Pole(pole,colors[index])
-        return zeros,poles,k
+                tempPair.append(pole)
+            returnPoles.append(tempPair)
+        return returnZeros,returnPoles,k
