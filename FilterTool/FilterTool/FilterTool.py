@@ -155,12 +155,14 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         selectedText = self.filterTypeComboBox.currentText()
         if selectedText == 'Low-pass':
             self.hide_pass_stop_2()
-        if selectedText == 'High-Pass':
+        if selectedText == 'High-pass':
             self.hide_pass_stop_2()
         if selectedText == 'Band-pass':
             self.show_pass_stop_2()
         if selectedText == 'Band-reject':
             self.show_pass_stop_2()
+        return
+
 
 
     ## Handler that validets a new template parameter setting.
@@ -307,7 +309,8 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         self.currentApproxComboBox.setItemText(0, QtCore.QCoreApplication.translate("MainWindow", approximation.legend))
         self.approximations.append(approximation)
         for line in preview_lines:
-            self.plotted_previews.append(line)
+            if line != None:
+                self.plotted_previews.append(line)
         # show canvas0
         self.template_canvas.show()
         # redraw canvas0
@@ -476,6 +479,8 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
             self.freq_response_plotted = True
             self.freq_canvas.draw()
             self.freq_canvas.show()
+        return
+
 
     def on_set_current_approx_clicked(self):
         selectedLegend=self.currentApproxComboBox.currentText()

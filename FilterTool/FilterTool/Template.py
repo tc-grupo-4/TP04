@@ -40,6 +40,7 @@ class Template(object):
 
         if self.final:
             self.__normalize()
+        return
 
 
     ## Validates template data
@@ -127,6 +128,7 @@ class Template(object):
             delta_ws = self.omega_s2 - self.omega_s1
             delta_wp = self.omega_p2 - self.omega_p1
             self.omega_sN = delta_wp/delta_ws
+        return
 
             
 
