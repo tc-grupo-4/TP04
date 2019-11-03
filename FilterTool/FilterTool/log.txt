@@ -1,0 +1,65 @@
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\FilterTool.py", line 516, in on_set_current_approx_clicked
+    self.setCurrentApproximation(selectedApproximation)
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\FilterTool.py", line 543, in setCurrentApproximation
+    approximation.plotToStagesTab()
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\Approximation.py", line 656, in plotToStagesTab
+    if self.ax is not None: self.figure.delaxes(self.ax) 
+AttributeError: 'Approximation' object has no attribute 'figure'
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1366x722+0+23 (frame: 1382x761-8-8) on QWidgetWindow/"MainWindowWindow" on "\\.\DISPLAY1". Resulting geometry: 1366x705+0+23 (frame: 1382x744-8-8) margins: 8, 31, 8, 8 minimum size: 396x722 MINMAXINFO maxSize=0,0 maxpos=0,0 mintrack=412,761 maxtrack=0,0)
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\FilterTool.py", line 516, in on_set_current_approx_clicked
+    self.setCurrentApproximation(selectedApproximation)
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\FilterTool.py", line 543, in setCurrentApproximation
+    approximation.plotToStagesTab()
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\Approximation.py", line 656, in plotToStagesTab
+    if self.ax is not None: self.figure.delaxes(self.ax) 
+AttributeError: 'Approximation' object has no attribute 'figure'
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1366x722+0+23 (frame: 1382x761-8-8) on QWidgetWindow/"MainWindowWindow" on "\\.\DISPLAY1". Resulting geometry: 1366x705+0+23 (frame: 1382x744-8-8) margins: 8, 31, 8, 8 minimum size: 396x722 MINMAXINFO maxSize=0,0 maxpos=0,0 mintrack=412,761 maxtrack=0,0)
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1366x722+0+23 (frame: 1382x761-8-8) on QWidgetWindow/"MainWindowWindow" on "\\.\DISPLAY1". Resulting geometry: 1366x705+0+23 (frame: 1382x744-8-8) margins: 8, 31, 8, 8 minimum size: 396x722 MINMAXINFO maxSize=0,0 maxpos=0,0 mintrack=412,761 maxtrack=0,0)
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\FilterTool.py", line 324, in on_preview_clicked
+    approx_type=self.approx_type)
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\Approximation.py", line 66, in __init__
+    self.program.tabWidget.setCurrentWidget(self.program.tabWidget.findChild(QWidget, "tab"))
+NameError: name 'QWidget' is not defined
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1366x722+0+23 (frame: 1382x761-8-8) on QWidgetWindow/"MainWindowWindow" on "\\.\DISPLAY1". Resulting geometry: 1366x705+0+23 (frame: 1382x744-8-8) margins: 8, 31, 8, 8 minimum size: 396x722 MINMAXINFO maxSize=0,0 maxpos=0,0 mintrack=412,761 maxtrack=0,0)
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\FilterTool.py", line 324, in on_preview_clicked
+    approx_type=self.approx_type)
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\Approximation.py", line 66, in __init__
+    self.program.tabWidget.setCurrentWidget(self.program.tabWidget.findChild(tabWidget, "tab"))
+NameError: name 'tabWidget' is not defined
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1366x722+0+23 (frame: 1382x761-8-8) on QWidgetWindow/"MainWindowWindow" on "\\.\DISPLAY1". Resulting geometry: 1366x705+0+23 (frame: 1382x744-8-8) margins: 8, 31, 8, 8 minimum size: 396x722 MINMAXINFO maxSize=0,0 maxpos=0,0 mintrack=412,761 maxtrack=0,0)
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1366x972+0+23 (frame: 1382x1011-8-8) on QWidgetWindow/"MainWindowWindow" on "\\.\DISPLAY1". Resulting geometry: 1366x705+0+23 (frame: 1382x744-8-8) margins: 8, 31, 8, 8 minimum size: 402x972 MINMAXINFO maxSize=0,0 maxpos=0,0 mintrack=418,1011 maxtrack=0,0)
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\FilterTool.py", line 517, in on_set_current_approx_clicked
+    else : self.setCurrentApproximation(None)
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\FilterTool.py", line 537, in setCurrentApproximation
+    self.clearLayout(self.horizontalLayout_30)
+AttributeError: 'FilterTool' object has no attribute 'horizontalLayout_30'
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1366x722+0+23 (frame: 1382x761-8-8) on QWidgetWindow/"MainWindowWindow" on "\\.\DISPLAY1". Resulting geometry: 1366x705+0+23 (frame: 1382x744-8-8) margins: 8, 31, 8, 8 minimum size: 396x722 MINMAXINFO maxSize=0,0 maxpos=0,0 mintrack=412,761 maxtrack=0,0)
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1366x722+0+23 (frame: 1382x761-8-8) on QWidgetWindow/"MainWindowWindow" on "\\.\DISPLAY1". Resulting geometry: 1366x705+0+23 (frame: 1382x744-8-8) margins: 8, 31, 8, 8 minimum size: 396x722 MINMAXINFO maxSize=0,0 maxpos=0,0 mintrack=412,761 maxtrack=0,0)
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1366x722+0+23 (frame: 1382x761-8-8) on QWidgetWindow/"MainWindowWindow" on "\\.\DISPLAY1". Resulting geometry: 1366x705+0+23 (frame: 1382x744-8-8) margins: 8, 31, 8, 8 minimum size: 396x722 MINMAXINFO maxSize=0,0 maxpos=0,0 mintrack=412,761 maxtrack=0,0)
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\FilterTool.py", line 324, in on_preview_clicked
+    approx_type=self.approx_type)
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\Approximation.py", line 60, in __init__
+    self.initPoints()
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\Approximation.py", line 578, in initPoints
+    zeros, poles, k=self.getZPKList()
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\Approximation.py", line 562, in getZPKList
+    pole=Pole(pole,colors[index])
+IndexError: list index out of range
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1366x722+0+23 (frame: 1382x761-8-8) on QWidgetWindow/"MainWindowWindow" on "\\.\DISPLAY1". Resulting geometry: 1366x705+0+23 (frame: 1382x744-8-8) margins: 8, 31, 8, 8 minimum size: 396x722 MINMAXINFO maxSize=0,0 maxpos=0,0 mintrack=412,761 maxtrack=0,0)
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\FilterTool.py", line 324, in on_preview_clicked
+    approx_type=self.approx_type)
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\Approximation.py", line 61, in __init__
+    self.colors=[cm(1.*i/pointsQuantity) for i in range(pointsQuantity)]
+  File "C:\Users\Matías\Source\Repos\TP04n\FilterTool\FilterTool\Approximation.py", line 61, in <listcomp>
+    self.colors=[cm(1.*i/pointsQuantity) for i in range(pointsQuantity)]
+NameError: name 'cm' is not defined
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1366x722+0+23 (frame: 1382x761-8-8) on QWidgetWindow/"MainWindowWindow" on "\\.\DISPLAY1". Resulting geometry: 1366x705+0+23 (frame: 1382x744-8-8) margins: 8, 31, 8, 8 minimum size: 396x722 MINMAXINFO maxSize=0,0 maxpos=0,0 mintrack=412,761 maxtrack=0,0)
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1366x722+0+23 (frame: 1382x761-8-8) on QWidgetWindow/"MainWindowWindow" on "\\.\DISPLAY1". Resulting geometry: 1366x705+0+23 (frame: 1382x744-8-8) margins: 8, 31, 8, 8 minimum size: 396x722 MINMAXINFO maxSize=0,0 maxpos=0,0 mintrack=412,761 maxtrack=0,0)
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1366x722+0+23 (frame: 1382x761-8-8) on QWidgetWindow/"MainWindowWindow" on "\\.\DISPLAY1". Resulting geometry: 1366x705+0+23 (frame: 1382x744-8-8) margins: 8, 31, 8, 8 minimum size: 396x722 MINMAXINFO maxSize=0,0 maxpos=0,0 mintrack=412,761 maxtrack=0,0)

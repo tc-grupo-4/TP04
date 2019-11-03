@@ -13,7 +13,8 @@ from Approximation import *
 
 
 class Point(object):
-    Etapa=None
+    stage=None
+    pair=None
     def __init__(self, value, color):
         self.color=color
         self.value=value
@@ -31,7 +32,7 @@ class Point(object):
     
 
 class PointPair(list):
-    def __init__(self, points,type,color=None):
+    def __init__(self, approximation,points,type,color=None):
         if isinstance(points[0],Point):
             self.extend(points)
         else:
@@ -44,13 +45,22 @@ class PointPair(list):
         self.color=self[0].color
         self.type=type
         self.groupBox=None
+        self.stage=None
+        self.approximation=approximation
+        self.radioButtonLayouts=[]
+        for point in points: point.pair=self
 
     def assignToStage(self, stage):
         for point in self:
-            if point.Etapa is not None: point.Etapa.removePoints(self)
-            point.Etapa=stage
-            self.Etapa=stage
-        stage.addPoints(self)
+            if point.stage is not None: point.stage.removePair(self)
+            point.stage=stage
+        self.stage=stage
+        #stage.addPoints(self)
+
+    def clearStage(self):
+        self.stage=None
+        for point in self:
+            point.stage=None
     
     def isZero(self): 
         if self.type=="zero": return True
@@ -72,28 +82,54 @@ class Pole(Point):
         return False
 
 class Etapa:
-    zeroList=[]
-    poleList=[]
     
     
-    def __init__(self, figure=None,figurecanvas=None):
-        if figure is not None: self.setFigure(figure)
-        if figurecanvas is not None: self.setFigureCanvas(figurecanvas)
+    
+    def __init__(self, figArray):
+        """
+        Initializes stage.
+        figArray=[figure, figureCanvas]
+        """
+        if len(figArray) == 2:
+            self.setFigure(figArray[0])
+            self.setFigureCanvas(figArray[1])
+        else: raise ValueError("Stage init: invalid figArray")
         self.ax=None
+        self.zeroList=[]
+        self.poleList=[]
+        self.canAddPole=True
+        self.canAddZero=True
+        
 
-    def addPoints(self, pointPair):
-        if pointPair.isPole(): self.poleList.append(pointPair)
-        elif pointPair.isZero(): self.zeroList.append(pointPair)
+    def addPair(self, pointPair):
+        
+        if pointPair.isPole(): 
+            if len(self.poleList)<2:
+                self.poleList.append(pointPair)
+            else: raise ValueError("Cannot add pole to stage: already is of second order")
+            
+                
+        elif pointPair.isZero(): 
+            if len(self.zeroList)<2:
+                self.zeroList.append(pointPair)
+            else: raise ValueError("Cannot add zero to stage: already is of second order")
+            
+                
         else : return
-        for point in pointPair: point.Etapa=self
-        pointPair.Etapa=self
+        pointPair.assignToStage(self)
+        
 
-    def removePoints(self, pointPair):
-        if pointPair.isPole(): self.poleList.remove(pointPair)
-        elif pointPair.isZero(): self.zeroList.remove(pointPair)
+    def removePair(self, pointPair):
+        if pointPair.isPole(): 
+            self.poleList.remove(pointPair)
+            
+        elif pointPair.isZero(): 
+            self.zeroList.remove(pointPair)
+            
         else : return
-        for point in pointPair: point.Etapa=None
-        pointPair.Etapa=None
+        pointPair.clearStage()
+
+
 
     def getTransferFunction(self):
         return self.num, self.den
@@ -124,7 +160,7 @@ class Etapa:
             self.ax = self.figure.add_subplot(111, projection='polar')
             polarPlot(self.zeroList, self.poleList, self.ax)
             self.figurecanvas.draw()
-            self.figurecanvas.show()
+            #self.figurecanvas.show()
             
         else: print("Error: Set figure first")
    

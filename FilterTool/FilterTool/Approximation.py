@@ -12,6 +12,15 @@ import cmath
 import matplotlib.pyplot as mpl
 from Etapa import *
 
+class GroupBoxPar(QtWidgets.QGroupBox):
+    def __init__(self, tab):
+        QtWidgets.QGroupBox.__init__(self, tab)
+        self.radioButtons=[]
+        self.par=None
+
+
+
+
 class Approximation(object):
     """description of class"""
     def __init__(self, program, template,**kwargs):
@@ -32,6 +41,8 @@ class Approximation(object):
         self.index=len(program.approximations)
         self.mainStageFigure=None
         self.mainStageFigureCanvas=None
+        self.ax=None
+        
         if self.approx_type == 'butterworth':
             self.approx_type_pretty = 'Butterworth'
         elif self.approx_type == 'bessel':
@@ -49,12 +60,21 @@ class Approximation(object):
 
         self.__compute_parameters()
         self.compute_approximation()
+        pointsQuantity=len(self.zeros)+len(self.poles)
+        cm = mpl.get_cmap('gist_rainbow')
+        self.colors=[cm(1.*i/pointsQuantity) for i in range(pointsQuantity)]
         self.initStages()
-        self.updateStages()
         self.initPoints()
+        self.updateStages()
         self.initFigures()
-        self.program.setCurrentApproximation(self)
+
+        for pointList in [self.zeros, self.poles]:
+            for pair in pointList:
+                for radioButton in pair.groupBox.radioButtons:
+                    radioButton.clicked.connect(self.updateStages)
         
+        
+       
 
     def __compute_parameters(self):
         if self.template.filter_type == 'Low-pass':
@@ -498,7 +518,7 @@ class Approximation(object):
         zeros = []
         poles = []
         used = []
-        colors = ['r','g','b','c','m','y','k']
+        colors = self.colors
         for i in range(0,len(z)):
             if i not in used:
                 grouped = False
@@ -547,19 +567,17 @@ class Approximation(object):
                 zero=Zero(zero,colors[index])
                 tempPair.append(zero)
             
-            returnZeros.append(PointPair(tempPair,"zero"))
+            returnZeros.append(PointPair(self,tempPair,"zero"))
         for index, pair in enumerate(poles):
             tempPair.clear()
             for pole in pair:
                 pole=Pole(pole,colors[index])
                 tempPair.append(pole)
-            returnPoles.append(PointPair(tempPair,"pole"))
+            returnPoles.append(PointPair(self,tempPair,"pole"))
         return returnZeros,returnPoles,k
 
 
-    class GroupBoxPar(QtWidgets.QGroupBox):
-        radioButtons=[]
-        par=None
+    
         
         
     class stageRadioButton(QtWidgets.QRadioButton):
@@ -571,8 +589,10 @@ class Approximation(object):
         appIndex=self.index
         zeros, poles, k=self.getZPKList()
         _translate = QtCore.QCoreApplication.translate
+        polesGroupBoxes=[GroupBoxPar(self.program.tab_2) for i in range(len(poles))]
+        zerosGroupBoxes=[GroupBoxPar(self.program.tab_2) for i in range(len(zeros))]
         for index, par in enumerate(zeros):
-            groupBox = self.GroupBoxPar(self.tab_2)
+            groupBox = zerosGroupBoxes[index]
             
             groupBox.setObjectName("GroupBoxZeros"+str(index)+"approx"+str(appIndex))
             gridLayout = QtWidgets.QGridLayout(groupBox)
@@ -590,13 +610,12 @@ class Approximation(object):
                 radioButtonEtapa.setText(_translate("MainWindow", "Stage "+str(indexetapa)))
 
             gridLayout.addLayout(radioButtonLayoutPar, 0, 0, 1, 1)
-            
-            self.program.paresGroupBoxLayout.addWidget(groupBox)
+            #self.program.paresGroupBoxLayout.addWidget(groupBox)
             groupBox.setTitle(_translate("MainWindow", "Zeros Pair "+str(index)))
             par.groupBox=groupBox
         
         for index, par in enumerate(poles):
-            groupBox = self.GroupBoxPar(self.program.tab_2)
+            groupBox = polesGroupBoxes[index]
             
             groupBox.setObjectName("GroupBoxPoles"+str(index)+"approx"+str(appIndex))
             gridLayout = QtWidgets.QGridLayout(groupBox)
@@ -615,7 +634,7 @@ class Approximation(object):
 
             gridLayout.addLayout(radioButtonLayoutPar, 0, 0, 1, 1)
             
-            self.program.paresGroupBoxLayout.addWidget(groupBox)
+            #self.program.paresGroupBoxLayout.addWidget(groupBox)
             groupBox.setTitle(_translate("MainWindow", "Pole Pair "+str(index)))
             par.groupBox=groupBox
 
@@ -636,16 +655,26 @@ class Approximation(object):
         #b=len(self.approximation.den_norm)
         #c=len(self.approximation.num)
         #d=len(self.approximation.num_norm)
-        for index in range(math.ceil(self.order/2)):
-            figure, figurecanvas=self.getNewStageFigure()
-            stage=Etapa(figure,figurecanvas)
-            self.stages.append(stage)
+        self.stages.extend([Etapa(self.getNewStageFigure()) for i in range(math.ceil(self.order/2))])
+        #for index in range(math.ceil(self.order/2)):
+        #    figure, figurecanvas=self.getNewStageFigure()
+        #    stage=Etapa(figure,figurecanvas)
+        #    self.stages.append(stage)
 
    
     def plotToStagesTab(self):
-        polarPlot(self.zeros, self.poles, self.mainStageFigure.gca())
-        #self.mainStageFigureCanvas.show()
-        self.mainStageFigureCanvas.draw()
+        if self.mainStageFigure is not None:
+            if self.ax is not None: self.mainStageFigure.delaxes(self.ax) 
+            
+            self.ax = self.mainStageFigure.add_subplot(111, projection='polar')
+            polarPlot(self.zeros, self.poles, self.ax)
+            self.mainStageFigureCanvas.draw()
+            #self.figurecanvas.show()
+            
+        else: print("Error: Set figure first")
+        
+    
+
 
     #def initStages(self):
         
@@ -661,19 +690,17 @@ class Approximation(object):
         
             
     def updateStages(self):
-        for point in self.points:
-            for radioButton in point.groupBox.radioButtons:
-                if radioButton.isChecked():
-                    point.stage=radioButton.stage
-                    if point.isPole():
-                        radioButton.stage.poleList.append(point)
-                    elif point.isZero():
-                        radioButton.stage.zeroList.append(point)
-                else:
-                    try: radioButton.stage.poleList.remove(point)
-                    except: continue
-                    try: radioButton.stage.zeroList.remove(point)
-                    except: continue
+        for pairList in [self.zeros, self.poles]:
+            for pair in pairList:
+                for radioButton in pair.groupBox.radioButtons:
+                    if radioButton.isChecked():
+                        try: radioButton.stage.addPair(pair)
+                        except: radioButton.setChecked(False)
+                    else:
+                        try: radioButton.stage.removePair(pair)
+                        except: continue
+                    
+                    
         
         for stage in self.stages:
             stage.plotStage()

@@ -12,7 +12,26 @@ import matplotlib.pyplot as mpl
 from distutils.spawn import find_executable
 import math
 from Etapa import *
-   
+
+def qt_message_handler(mode, context, message):
+    if mode == QtCore.QtInfoMsg:
+        mode = 'INFO'
+    elif mode == QtCore.QtWarningMsg:
+        mode = 'WARNING'
+    elif mode == QtCore.QtCriticalMsg:
+        mode = 'CRITICAL'
+    elif mode == QtCore.QtFatalMsg:
+        mode = 'FATAL'
+    else:
+        mode = 'DEBUG'
+    file=open("log.txt","a+")
+    file.write('qt_message_handler: line: %d, func: %s(), file: %s' % (
+          context.line, context.function, context.file))
+    file.write('  %s: %s\n' % (mode, message))
+    file.close()
+    
+     
+
 
 ## Class inherited from Ui_MainWindow to customize GUI design and behaviour
 class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
@@ -25,11 +44,11 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         if find_executable('latex'):
             mpl.rc('font',**{'family':'serif','serif':['Palatino']})
             mpl.rc('text', usetex=True)
-
+            
         # array containing approximation types
         self.approx_types = ['butterworth', 'bessel', 'cheby_1', 'cheby_2', 'legendre', 'gauss', 'cauer']
 
-
+        self.currentApproxComboBox.currentIndexChanged.connect(self.on_set_current_approx_clicked)
         self.setStagesPushButton.clicked.connect(self.updateStages)
         # connect 'preview aproximation' button to handler
         self.previewApproxButton.clicked.connect(self.on_preview_clicked)
@@ -103,6 +122,9 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         self.polesGroupBoxes=[]
         self.stages=[]
         self.mainStageFigure=None
+        self.currentApproxComboBox.addItem("None")
+        self.currentApproxComboBox.setCurrentText("None")
+       
         
 
 
@@ -305,9 +327,12 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         left_N, right_N = self.template_axes_norm.get_xlim()
         limits = {'left':left, 'right':right, 'left_N':left_N, 'right_N':right_N}
         preview_lines = approximation.plot_preview_to_axes(self.template_axes, self.template_axes_norm, limits)
-        self.currentApproxComboBox.addItem("")
-        self.currentApproxComboBox.setItemText(0, QtCore.QCoreApplication.translate("MainWindow", approximation.legend))
+        self.currentApproxComboBox.addItem(approximation.legend)
+        #self.currentApproxComboBox.setItemText(0, QtCore.QCoreApplication.translate("MainWindow", approximation.legend))
+        
         self.approximations.append(approximation)
+        self.currentApproxComboBox.setCurrentText(approximation.legend)
+        
         for line in preview_lines:
             if line != None:
                 self.plotted_previews.append(line)
@@ -344,10 +369,10 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         self.template_canvas.draw()
         # set template submited to True
         self.template_submited = True
-        self.currentApproximation.clear()
         self.approximations.clear()
-        self.setCurrentApproximation(None)
         self.currentApproxComboBox.Items.clear()
+        self.currentApproximation=None
+        self.currentApproxComboBox.setCurrentText("None")
         self.validate_approximation()
         
 
@@ -483,12 +508,13 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
 
 
     def on_set_current_approx_clicked(self):
+        
         selectedLegend=self.currentApproxComboBox.currentText()
         if selectedLegend != "None":
             for approximation in self.approximations:
                 if approximation.legend==selectedLegend: selectedApproximation=approximation
             self.setCurrentApproximation(selectedApproximation)
-        else : setCurrentApproximation(None)
+        else : self.setCurrentApproximation(None)
 
     class groupBoxPar(QtWidgets.QGroupBox):
         radioButtons=[]
@@ -500,23 +526,33 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         
     def updateStages(self):
         self.currentApproximation.updateStages()
-
+        
     def clearLayout(self, layout):
         if layout.count()!=0:
             for i in reversed(range(layout.count())): 
                 tempWidget=layout.itemAt(i).widget()
-                if tempWidget is not None: tempWidget.setParent(None)
+                if tempWidget is not None and str(tempWidget.accessibleName())!="scroll": tempWidget.setParent(None)
     
     def setCurrentApproximation(self, approximation):
         self.clearLayout(self.horizontalLayout_30)
         self.clearLayout(self.horizontalLayout_29)
+        self.clearLayout(self.paresGroupBoxLayout)
+        self.currentApproximation=approximation
         if approximation is not None:
+            self.setStagesPushButton.show()
             self.horizontalLayout_30.addWidget(approximation.mainStageFigureCanvas)
             approximation.plotToStagesTab()
             for stage in approximation.stages:  
                 self.horizontalLayout_29.addWidget(stage.figurecanvas)
                 stage.plotStage()
-        
+            for pairList in [approximation.poles, approximation.zeros]:
+                for pair in pairList:
+                    self.paresGroupBoxLayout.addWidget(pair.groupBox)
+            #currentItem=[self.currentApproxComboBox.itemText(count) for count in range(self.currentApproxComboBox.count())]  
+        else: 
+            self.setStagesPushButton.hide()
+            #self.currentApproximation=None
+            #self.currentApproxComboBox.setCurrentText("None")
 
 
             #for item in [self.polesGroupBoxes, self.zerosGroupBoxes]:
@@ -552,6 +588,7 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
     #    figure_canvas.draw()
             
 def main():
+    QtCore.qInstallMessageHandler(qt_message_handler)
     app = QtWidgets.QApplication(sys.argv)
     app.setStyle('Fusion')
     filter_tool = FilterTool()
