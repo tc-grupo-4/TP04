@@ -42,7 +42,7 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         # configure to use latex interpreter
         
         if find_executable('latex'):
-            mpl.rc('font',**{'family':'serif','serif':['Palatino']})
+            #mpl.rc('font',**{'family':'serif','serif':['Palatino']})
             mpl.rc('text', usetex=True)
             
         # array containing approximation types
@@ -370,10 +370,12 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
         # set template submited to True
         self.template_submited = True
         self.approximations.clear()
-        self.currentApproxComboBox.Items.clear()
         self.currentApproximation=None
         self.currentApproxComboBox.setCurrentText("None")
         self.validate_approximation()
+        self.currentApproxComboBox.update()
+        #self.currentApproxComboBox.clear()   #Por alguna razon esta linea no anda
+        return
         
 
     def on_compute_clicked(self):
@@ -391,7 +393,8 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
                 self.att_axes.clear()
             # create axes in figure
             self.att_axes = self.att_fig.add_subplot(111)
-            left, right = self.approximation.plot_attenuation_to_axes(self.att_axes)
+            for approximation in self.approximations:
+                left, right = approximation.plot_attenuation_to_axes(self.att_axes)
 
             t_left, t_right = self.template_axes.get_xlim()
             if t_left > left:
@@ -415,7 +418,8 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
             self.phase_axes = self.phase_fig.add_subplot(111)
             left, right = self.template_axes.get_xlim()
             limits = {'left':left, 'right':right}
-            p_left, p_right = self.approximation.plot_phase_to_axes(self.phase_axes, limits)
+            for approximation in self.approximations:
+                p_left, p_right = approximation.plot_phase_to_axes(self.phase_axes, limits)
 
             if p_left > left:
                 left = p_left
@@ -438,7 +442,8 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
             self.group_axes = self.group_fig.add_subplot(111)
             left, right = self.template_axes.get_xlim()
             limits = {'left':left, 'right':right}
-            p_left, p_right = self.approximation.plot_group_delay_to_axes(self.group_axes, limits)
+            for approximation in self.approximations:
+                p_left, p_right = approximation.plot_group_delay_to_axes(self.group_axes, limits)
 
             self.group_axes.set_ylim(auto=True)
             self.group_axes.legend()
@@ -456,7 +461,8 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
             self.step_axes = self.step_fig.add_subplot(111)
             left, right = self.template_axes.get_xlim()
             limits = {'left':left, 'right':right}
-            self.approximation.plot_step_response_to_axes(self.step_axes)
+            for approximation in self.approximations:
+                approximation.plot_step_response_to_axes(self.step_axes)
 
             self.step_axes.set_ylim(auto=True)
             self.step_axes.legend()
@@ -474,7 +480,8 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
             self.s_plane_axes = self.s_plane_fig.add_subplot(111, projection='polar')
             left, right = self.template_axes.get_xlim()
             limits = {'left':left, 'right':right}
-            self.approximation.plot_s_plane_to_axes(self.s_plane_axes)
+            for approximation in self.approximations:
+                approximation.plot_s_plane_to_axes(self.s_plane_axes)
 
             self.s_plane_axes.set_ylim(auto=True)
             self.s_plane_axes.legend()
@@ -489,7 +496,8 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
             self.freq_axes = self.freq_fig.add_subplot(111)
             left, right = self.template_axes.get_xlim()
             limits = {'left':left, 'right':right}
-            p_left, p_right = self.approximation.plot_freq_response_to_axes(self.freq_axes, limits)
+            for approximation in self.approximations:
+                p_left, p_right = approximation.plot_freq_response_to_axes(self.freq_axes, limits)
 
             if p_left > left:
                 left = p_left
@@ -532,6 +540,8 @@ class FilterTool(QtWidgets.QMainWindow, FilterToolDesign.Ui_MainWindow):
             for i in reversed(range(layout.count())): 
                 tempWidget=layout.itemAt(i).widget()
                 if tempWidget is not None and str(tempWidget.accessibleName())!="scroll": tempWidget.setParent(None)
+
+        return
     
     def setCurrentApproximation(self, approximation):
         self.clearLayout(self.horizontalLayout_30)

@@ -72,9 +72,6 @@ class Approximation(object):
             for pair in pointList:
                 for radioButton in pair.groupBox.radioButtons:
                     radioButton.clicked.connect(self.updateStages)
-        
-        
-       
 
     def __compute_parameters(self):
         if self.template.filter_type == 'Low-pass':
@@ -466,7 +463,7 @@ class Approximation(object):
         r_zeros = []
         theta_zeros = []
 
-        for complex in self.poles:
+        for complex in self.poles_norm:
             r = np.real(complex)
             i = np.imag(complex)
             rho = np.sqrt(r**2 + i**2)
@@ -475,7 +472,7 @@ class Approximation(object):
             theta_poles.append(theta)
 
 
-        for complex in self.zeros:
+        for complex in self.zeros_norm:
             r = np.real(complex)
             i = np.imag(complex)
             rho = np.sqrt(r**2 + i**2)

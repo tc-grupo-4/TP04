@@ -63,3 +63,156 @@ NameError: name 'cm' is not defined
 qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1366x722+0+23 (frame: 1382x761-8-8) on QWidgetWindow/"MainWindowWindow" on "\\.\DISPLAY1". Resulting geometry: 1366x705+0+23 (frame: 1382x744-8-8) margins: 8, 31, 8, 8 minimum size: 396x722 MINMAXINFO maxSize=0,0 maxpos=0,0 mintrack=412,761 maxtrack=0,0)
 qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1366x722+0+23 (frame: 1382x761-8-8) on QWidgetWindow/"MainWindowWindow" on "\\.\DISPLAY1". Resulting geometry: 1366x705+0+23 (frame: 1382x744-8-8) margins: 8, 31, 8, 8 minimum size: 396x722 MINMAXINFO maxSize=0,0 maxpos=0,0 mintrack=412,761 maxtrack=0,0)
 qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1366x722+0+23 (frame: 1382x761-8-8) on QWidgetWindow/"MainWindowWindow" on "\\.\DISPLAY1". Resulting geometry: 1366x705+0+23 (frame: 1382x744-8-8) margins: 8, 31, 8, 8 minimum size: 396x722 MINMAXINFO maxSize=0,0 maxpos=0,0 mintrack=412,761 maxtrack=0,0)
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "c:/Users/Ian Diaz/Desktop/ITBA/TC/TP04/FilterTool/FilterTool/FilterTool.py", line 492, in on_compute_clicked
+    p_left, p_right = self.approximation.plot_freq_response_to_axes(self.freq_axes, limits)
+AttributeError: 'FilterTool' object has no attribute 'approximation'
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "c:/Users/Ian Diaz/Desktop/ITBA/TC/TP04/FilterTool/FilterTool/FilterTool.py", line 394, in on_compute_clicked
+    left, right = self.approximation.plot_attenuation_to_axes(self.att_axes)
+AttributeError: 'FilterTool' object has no attribute 'approximation'
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "c:/Users/Ian Diaz/Desktop/ITBA/TC/TP04/FilterTool/FilterTool/FilterTool.py", line 492, in on_compute_clicked
+    p_left, p_right = self.approximation.plot_freq_response_to_axes(self.freq_axes, limits)
+AttributeError: 'FilterTool' object has no attribute 'approximation'
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "c:\Users\Ian Diaz\Desktop\ITBA\TC\TP04\FilterTool\FilterTool\FilterTool.py", line 394, in on_compute_clicked
+    left, right = self.approximation.plot_attenuation_to_axes(self.att_axes)
+AttributeError: 'FilterTool' object has no attribute 'approximation'
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "c:/Users/Ian Diaz/Desktop/ITBA/TC/TP04/FilterTool/FilterTool/FilterTool.py", line 394, in on_compute_clicked
+    left, right = self.approximation.plot_attenuation_to_axes(self.att_axes)
+AttributeError: 'FilterTool' object has no attribute 'approximation'
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "c:\Users\Ian Diaz\Desktop\ITBA\TC\TP04\FilterTool\FilterTool\FilterTool.py", line 394, in on_compute_clicked
+    left, right = self.approximation.plot_attenuation_to_axes(self.att_axes)
+AttributeError: 'FilterTool' object has no attribute 'approximation'
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "c:\Users\Ian Diaz\Desktop\ITBA\TC\TP04\FilterTool\FilterTool\FilterTool.py", line 394, in on_compute_clicked
+    left, right = self.approximation.plot_attenuation_to_axes(self.att_axes)
+AttributeError: 'FilterTool' object has no attribute 'approximation'
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "c:\Users\Ian Diaz\Desktop\ITBA\TC\TP04\FilterTool\FilterTool\FilterTool.py", line 394, in on_compute_clicked
+    left, right = self.approximation.plot_attenuation_to_axes(self.att_axes)
+AttributeError: 'FilterTool' object has no attribute 'approximation'
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Ian Diaz\Desktop\TP4\TP4\FilterTool.py", line 395, in on_compute_clicked
+    left, right = self.approximation.plot_attenuation_to_axes(self.att_axes)
+AttributeError: 'FilterTool' object has no attribute 'approximation'
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Ian Diaz\Desktop\TP4\TP4\FilterTool.py", line 395, in on_compute_clicked
+    left, right = self.approximation.plot_attenuation_to_axes(self.att_axes)
+AttributeError: 'FilterTool' object has no attribute 'approximation'
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Ian Diaz\Desktop\TP4\TP4\FilterTool.py", line 482, in on_compute_clicked
+    approximation.plot_s_plane_to_axes(self.s_plane_axes)
+  File "C:\Users\Ian Diaz\Desktop\TP4\TP4\Approximation.py", line 469, in plot_s_plane_to_axes
+    rho = np.sqrt(r**2 + i**2)
+TypeError: unsupported operand type(s) for ** or pow(): 'Pole' and 'int'
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Ian Diaz\Desktop\TP4\TP4\FilterTool.py", line 482, in on_compute_clicked
+    approximation.plot_s_plane_to_axes(self.s_plane_axes)
+  File "C:\Users\Ian Diaz\Desktop\TP4\TP4\Approximation.py", line 467, in plot_s_plane_to_axes
+    for a in range(0,len(complex)):
+TypeError: object of type 'numpy.complex128' has no len()
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Ian Diaz\Desktop\TP4\TP4\FilterTool.py", line 373, in on_clear_previews_clicked
+    self.currentApproxComboBox.Items.clear()
+AttributeError: 'QComboBox' object has no attribute 'Items'
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Ian Diaz\Desktop\TP4\TP4\FilterTool.py", line 482, in on_compute_clicked
+    approximation.plot_s_plane_to_axes(self.s_plane_axes)
+  File "C:\Users\Ian Diaz\Desktop\TP4\TP4\Approximation.py", line 478, in plot_s_plane_to_axes
+    rho = np.sqrt(r**2 + i**2)
+TypeError: unsupported operand type(s) for ** or pow(): 'Zero' and 'int'
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QObject::~QObject: Timers cannot be stopped from another thread
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QObject::~QObject: Timers cannot be stopped from another thread
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Ian Diaz\Desktop\TP4\TP4\FilterTool.py", line 373, in on_clear_previews_clicked
+    self.currentApproxComboBox.Items.clear()
+AttributeError: 'QComboBox' object has no attribute 'Items'
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Ian Diaz\Desktop\TP4\TP4\FilterTool.py", line 522, in on_set_current_approx_clicked
+    self.setCurrentApproximation(selectedApproximation)
+UnboundLocalError: local variable 'selectedApproximation' referenced before assignment
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Ian Diaz\Desktop\TP4\TP4\FilterTool.py", line 522, in on_set_current_approx_clicked
+    self.setCurrentApproximation(selectedApproximation)
+UnboundLocalError: local variable 'selectedApproximation' referenced before assignment
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Ian Diaz\Desktop\TP4\TP4\FilterTool.py", line 522, in on_set_current_approx_clicked
+    self.setCurrentApproximation(selectedApproximation)
+UnboundLocalError: local variable 'selectedApproximation' referenced before assignment
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Ian Diaz\Desktop\TP4\TP4\FilterTool.py", line 525, in on_set_current_approx_clicked
+    self.setCurrentApproximation(selectedApproximation)
+UnboundLocalError: local variable 'selectedApproximation' referenced before assignment
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Ian Diaz\Desktop\TP4\TP4\FilterTool.py", line 522, in on_set_current_approx_clicked
+    self.setCurrentApproximation(selectedApproximation)
+UnboundLocalError: local variable 'selectedApproximation' referenced before assignment
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Ian Diaz\Desktop\TP4\TP4\FilterTool.py", line 522, in on_set_current_approx_clicked
+    self.setCurrentApproximation(selectedApproximation)
+UnboundLocalError: local variable 'selectedApproximation' referenced before assignment
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Ian Diaz\Desktop\TP4\TP4\FilterTool.py", line 523, in on_set_current_approx_clicked
+    self.setCurrentApproximation(selectedApproximation)
+UnboundLocalError: local variable 'selectedApproximation' referenced before assignment
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "FilterTool.py", line 523, in on_set_current_approx_clicked
+    self.setCurrentApproximation(selectedApproximation)
+UnboundLocalError: local variable 'selectedApproximation' referenced before assignment
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  FATAL: Traceback (most recent call last):
+  File "C:\Users\Ian Diaz\Desktop\TP4\TP4\FilterTool.py", line 522, in on_set_current_approx_clicked
+    self.setCurrentApproximation(selectedApproximation)
+UnboundLocalError: local variable 'selectedApproximation' referenced before assignment
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
+qt_message_handler: line: 0, func: None(), file: None  WARNING: QWindowsWindow::setGeometry: Unable to set geometry 1360x722+0+23 on QWidgetWindow/'MainWindowWindow'. Resulting geometry:  1360x705+0+23 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 408x722, maximum size: 16777215x16777215).
