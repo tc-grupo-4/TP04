@@ -1,5 +1,5 @@
 pip==19.0.3
-setuptools==40.8.0
+setuptools==65.5.1
 matplotlib
 numpy
 PyQt5
